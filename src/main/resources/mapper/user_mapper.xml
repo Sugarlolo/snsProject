@@ -10,4 +10,10 @@
             select count(*) from test1.users
         ]]>
     </select>
+
+    <select id="getAccountInfo" resultType="boolean">
+        <![CDATA[
+            select userid from test1.users where userid = #{userid}
+        ]]>
+    </select>
 </mapper>
