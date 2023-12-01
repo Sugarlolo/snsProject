@@ -32,5 +32,4 @@ public class LoginController {
         return "HTML/index";
     }
 
-
 }
