@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -16,4 +17,5 @@ public class UserService {
     }
 
     public boolean getAccountInfo(@Param("userid") String userid) { return userDAO.getAccountInfo(); }
+
 }
