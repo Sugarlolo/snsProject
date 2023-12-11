@@ -1,6 +1,7 @@
 package com.example.snsProject.OAuth2;
 
 import com.example.snsProject.model.DAO.OAuth2UserInfo;
+import com.example.snsProject.service.OAuth2AuthenticationProcessingException;
 
 import java.util.Map;
 

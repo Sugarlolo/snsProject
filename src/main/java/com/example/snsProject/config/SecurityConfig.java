@@ -37,7 +37,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(
                         authorize -> authorize
-                                .requestMatchers("/api/user/**","/","/view/register", "/method/registUser", "/css/**", "/img/**", "/js/**").permitAll() // 이 URI는 누구든 접근가능
+                                .requestMatchers("/swagger-ui/**","/api/user/**","/","/view/register", "/method/registUser", "/css/**", "/img/**", "/js/**").permitAll() // 이 URI는 누구든 접근가능
                                 .requestMatchers("/api/admin/**").hasRole("ADMIN") // ADMIN role만 접근 가능
                                 .anyRequest().authenticated() // 어떤 URI로 접근하던 인증이 필요함
                 )
