@@ -1,35 +1,26 @@
 package com.example.snsProject.controller;
 
-import com.example.snsProject.model.DTO.UserDTO;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.Valid;
+import com.example.snsProject.model.DTO.MemberLoginDTO;
+import com.example.snsProject.service.MemberService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping(value="/restAPI")
 @RequiredArgsConstructor
+@RequestMapping("/method")
 public class LoginController {
-    @RequestMapping("/requestView")
-    public String responseView(Model model) {
-        model.addAttribute("data", "hello 테스트입니다.");
-        return "LoginTest";
-    }
-    @RequestMapping("/auth/login")
-    public String responseViewLogin(){
-        return "HTML/home";
-    }
+    private final MemberService memberService;
 
-    @RequestMapping("/loginProc")
-    public String responseLoginProc() {
-        return "HTML/index";
+    @PostMapping("/loginProc")
+    public String login(MemberLoginDTO dto) {
+        boolean isValidMember = memberService.isValidMember(dto);
+        String result_url = "/loginTest";
+        if (isValidMember)
+            result_url = "/view/home";
+        return result_url;
     }
 
 }
+
