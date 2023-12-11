@@ -1,14 +1,20 @@
 package com.example.snsProject.model.DTO;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import lombok.*;
 
-@Getter
-@Setter
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@Data
 @AllArgsConstructor
-@NoArgsConstructor
 public class UserDTO {
-    private String id;
-    private String password;
-    private String email;
+    Long id;
+    String userName;
+    String password;
+    String name;
+    String email;
+    String introduce;
+    String phone;
+    Integer gender;
+    String url;
+    String uuid;
+    String emoticon;
 }

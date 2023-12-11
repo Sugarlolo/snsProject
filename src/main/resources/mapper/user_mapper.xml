@@ -3,17 +3,65 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.snsProject.model.DAO.UserDAO">
+    <resultMap id="userResultMap" type="com.example.snsProject.model.DTO.UserDTO">
+        <id property="id" column="id"/>
+        <result property="userName" column="user_name"/>
+        <result property="password" column="password"/>
+        <result property="name" column="name"/>
+        <result property="email" column="email"/>
+        <result property="introduce" column="introduce"/>
+        <result property="phone" column="phone"/>
+        <result property="gender" column="gender"/>
+        <result property="url" column="url"/>
+        <result property="uuid" column="uuid"/>
+        <result property="emoticon" column="emotion"/>
+    </resultMap>
 
-    <!-- Query 문 작성해서 Mapping 하면 됨 -->
-    <select id="getCountAllMember" resultType="int">
+    <insert id="registerUser">
         <![CDATA[
-            select count(*) from test1.users
+            insert into member (user_name, password, name, email, phone) values (#{userName}, #{password}, #{name}, #{email}, #{phone});
+         ]]>
+    </insert>
+
+    <update id="updateUser">
+        <![CDATA[
+            update member set user_name=#{userName}, password=#{password}, introduce=#{introduce}, url=#{url}, uuid=#{uuid}, emoticon=#{emoticon} where id = #{id};
+        ]]>
+    </update>
+
+    <update id="profileUpdate">
+        <![CDATA[
+            update member set url=#{url} where id = #{id};
+        ]]>
+    </update>
+
+    <delete id="deleteUser">
+        <![CDATA[
+            delete from member where id = #{userId};
+        ]]>
+    </delete>
+
+    <select id="findUsers" resultMap="userResultMap">
+        <![CDATA[
+            select * from member;
         ]]>
     </select>
 
-    <select id="getAccountInfo" resultType="boolean">
+    <select id="findUser" resultMap="userResultMap">
         <![CDATA[
-            select userid from test1.users where userid = #{userid}
+            select * from member where id = #{userId};
+        ]]>
+    </select>
+
+    <select id="duplicateUser" resultType="int">
+        <![CDATA[
+            select COUNT(*) as result from member where email = #{phoneOrEmail} or phone = #{phoneOrEmail};
+        ]]>
+    </select>
+
+    <select id="findFollowUsers" resultType="com.example.snsProject.model.DTO.FollowDTO">
+        <![CDATA[
+            select * from follow where member_id = #{userId};
         ]]>
     </select>
 </mapper>

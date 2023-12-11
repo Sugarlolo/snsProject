@@ -16,5 +16,10 @@
     </environments>-->
     <mappers>
         <mapper resource="mapper/user_mapper.xml"/>
+        <mapper resource="mapper/post_mapper.xml"/>
+        <mapper resource="mapper/follow_mapper.xml"/>
+        <mapper resource="mapper/comment_mapper.xml"/>
+        <mapper resource="mapper/bookmark_mapper.xml"/>
+        <mapper resource="mapper/login_mapper.xml"/>
     </mappers>
 </configuration>

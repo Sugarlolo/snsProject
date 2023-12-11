@@ -1,7 +1,6 @@
 package com.example.snsProject.service;
 
 import com.example.snsProject.model.DAO.ImageDAO;
-import com.example.snsProject.model.DTO.ImageDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
