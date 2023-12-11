@@ -53,13 +53,15 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         SocialUsers user = userOptional
                 .map(entity -> entity.update(attributes.getName(), attributes.getProvider()))
                 .orElse(attributes.toEntity());
-        memberRepository.saveOrUpdate(user);
 
         if (email.contains("@kakao.com")) {
             user.kakaoUpdate(email);
             memberRepository.saveOrUpdate(user);
             String url = (String) attributesMap.get("profile_image");
+            System.out.println(user.getId());
             memberService.updateProfile(user.getId().toString(), url);
+        } else {
+            memberRepository.saveOrUpdate(user);
         }
 
         Optional<Member> findOne = memberService.findOne(user.getEmail());

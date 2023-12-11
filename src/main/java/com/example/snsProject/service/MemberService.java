@@ -44,5 +44,6 @@ public class MemberService {
     }
 
     public void updateProfile(String userId, String url) {
+        userDAO.profileUpdate(url, Long.parseLong(userId));
     }
 }
