@@ -1,0 +1,10 @@
+<div th:each="rs : ${result}">
+    <a th:href="@{/explore/{url}(url=${rs.post_id})}" class="exampleModal" data-bs-toggle="modal" data-bs-target="#exampleModal"
+       onclick="getPostHtml()">
+        <input class="postId" type="hidden" th:value="${rs.post_id}">
+        <img class="thumbNail" th:src="${rs.thumbnail_url}" alt="">
+        <th:block th:if="${rs.image_count>1}">
+            <i class="fa-solid fa-copy fa-2x fa-icon"></i>
+        </th:block>
+    </a>
+</div>

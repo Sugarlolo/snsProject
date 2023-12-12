@@ -21,5 +21,7 @@
         <mapper resource="mapper/comment_mapper.xml"/>
         <mapper resource="mapper/bookmark_mapper.xml"/>
         <mapper resource="mapper/login_mapper.xml"/>
+        <mapper resource="mapper/image_mapper.xml"/>
+
     </mappers>
 </configuration>

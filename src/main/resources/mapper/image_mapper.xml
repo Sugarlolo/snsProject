@@ -4,8 +4,7 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.snsProject.model.DAO.ImageDAO">
 
-    <!-- Query 문 작성해서 Mapping 하면 됨 -->
-    <select id="getImagesUrl" resultType="hashmap">
+    <select id="getImagesUrlExplore" resultType="hashmap">
         <![CDATA[
             SELECT post_id, url
             FROM post_image
@@ -15,6 +14,30 @@
                 GROUP BY post_id
             )
             ORDER BY RAND();
+        ]]>
+    </select>
+    <select id="getImagesUrlList" resultType="com.example.snsProject.model.DTO.ImageDTO">
+        <![CDATA[
+            SELECT post_id as postId, url as img_url
+            FROM post_image
+            WHERE id IN (
+                SELECT MIN(id)
+                FROM post_image
+                GROUP BY post_id
+            )
+            ORDER BY RAND();
+        ]]>
+    </select>
+
+    <select id="getPostListExplore" resultType="hashmap">
+        <![CDATA[
+            SELECT pi.post_id,
+            MIN(pi.url) AS thumbnail_url,
+            COUNT(pi.id) AS image_count
+            FROM post_image pi
+            GROUP BY pi.post_id
+            ORDER BY RAND()
+            LIMIT 6;
         ]]>
     </select>
 </mapper>

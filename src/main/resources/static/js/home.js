@@ -8,6 +8,7 @@ let currentScroll = 0
 let documentHeight = 0
 let nowHeight = 0
 let isLoading =false;
+
 //데이터 가져오는 함수
 function getData(limit){
     if (isLoading) {
@@ -240,6 +241,3 @@ $(document).on('click', ".fa-bookmark", function() {
              });
     }
 });
-
-
-

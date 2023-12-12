@@ -20,8 +20,4 @@ public class PostService {
     public boolean cancelLike(String memberId, String postId) {
         return postDAO.cancelLike(Long.parseLong(postId), Long.parseLong(memberId));
     }
-    public List<HashMap<?,?>> getImagesUrl(){
-        return postDAO.getImagesUrl();
-    }
-
 }
