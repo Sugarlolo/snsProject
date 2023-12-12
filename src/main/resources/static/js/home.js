@@ -240,6 +240,45 @@ $(document).on('click', ".fa-bookmark", function() {
              });
     }
 });
+/*
+$(document).on('click', ".feed_footer_emoteButton", function () {
+         // 현재 클릭된 .feed_footer_emoteButton 내부의 .emoticon 요소에 대한 작업 수행
+        $(this).find('.emoticonbox').each(function () {
+        var emoticonBox = $(this);
+        emoticonBox.toggle();
+
+         // 클릭 이벤트 전파 방지
+            event.stopPropagation();
+    });
+});*/
+
+$(document).on('click', ".feed_footer_emoteButton .fa-face-smile", function (event) {
+    // 현재 클릭된 .fa-face-smile이 포함된 .feed_footer_emoteButton 내부의 .emoticonbox 요소에 대한 작업 수행
+    var emoticonBox = $(this).closest('.feed_footer_emoteButton').find('.emoticonbox');
+
+    // 클릭 이벤트 전파 방지
+    event.stopPropagation();
+
+    // .emoticonbox를 토글
+    emoticonBox.toggle();
+});
+
+// 문서의 다른 부분을 클릭했을 때 이벤트 전파 방지
+$(document).on('click', function (event) {
+    // 현재 클릭된 요소가 .fa-face-smile 또는 .emoticonbox 내부에 속한 요소가 아니라면 모든 .emoticonbox를 닫음
+    if (!$(event.target).hasClass('fa-face-smile') && $(event.target).closest('.emoticonbox').length === 0) {
+        $(".feed_footer_emoteButton .emoticonbox").hide();
+    }
+});
 
 
+$(document).on('click', ".emoticon", function () {
+    // 클릭된 .emoticon의 텍스트를 가져와서 댓글 입력란에 추가
+    var emoticonText = $(this).text();
+    var postCommentInput = $(this).closest(".home_feed_contents").find(".feed_footer_postComment")
+    var currentText = postCommentInput.val();
+     postCommentInput.val(currentText + emoticonText);
 
+    // 댓글 입력란에 포커스 설정
+    postCommentInput.focus();
+});

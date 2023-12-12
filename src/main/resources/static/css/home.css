@@ -199,8 +199,10 @@ a {
 .feed_footer_postComment{
    font-size: 14px;
    outline: none;
+   width: 90%;
    border: none;
 }
+
 .feed_footer_postComment:placeholder-shown{
    font-size: 14px;
 }
@@ -317,4 +319,26 @@ a {
    display: flex;
    flex-direction: row;
    align-items: center;
+}
+
+.feed_footer_emoteButton {
+    position: relative;
+}
+
+.emoticonbox {
+    position: absolute;
+    top: -100%;
+    left: 0;
+    right: 300px;
+    width: 300px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    display: none;
+    background-color: white;
+    max-height: 200px; /* 최대 높이 설정 */
+    overflow-y: auto; /* Y축 스크롤 활성화 */
+}
+.emoticonbox div {
+    display: inline-block;
+    margin: 5px;  /* 이모티콘 간격 조절 */
 }

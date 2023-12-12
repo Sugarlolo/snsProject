@@ -128,11 +128,17 @@
                                           <form th:id="${post.id}">
                                              <div class="feed_footer_inputBox">
                                                 <div class="feed_footer_postCommentBox">
-                                                   <input type="text" class="feed_footer_postComment" placeholder="댓글 달기..">
+                                                   <input type="text" class="feed_footer_postComment" placeholder="댓글 달기.." >
                                                    <input type="hidden" id = "postId" th:value="${post.id}">
                                                 </div>
                                                 <div class="feed_footer_emoteButton">
-                                                   <span><i class="fa-regular fa-face-smile"></i></span>
+                                                   <span>
+                                                      <i class="fa-regular fa-face-smile">
+                                                      </i>
+                                                      <div class="emoticonbox">
+                                                            <div class="emoticon" th:text="${emoticons}" th:each="emoticons : ${emoticon}"></div>
+                                                      </div>
+                                                   </span>
                                                 </div>
                                              </div>
                                           </form>

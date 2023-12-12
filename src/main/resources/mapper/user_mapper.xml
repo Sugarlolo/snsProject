@@ -31,7 +31,7 @@
 
     <update id="profileUpdate">
         <![CDATA[
-            update member set url=#{url} where id = #{id};
+            update member set url=#{url} where email = #{email};
         ]]>
     </update>
 

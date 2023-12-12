@@ -43,7 +43,7 @@ public class MemberService {
         return user;
     }
 
-    public void updateProfile(String userId, String url) {
-        userDAO.profileUpdate(url, Long.parseLong(userId));
+    public void updateProfile(String email, String url) {
+        userDAO.profileUpdate(url, email);
     }
 }
