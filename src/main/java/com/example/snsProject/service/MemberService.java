@@ -8,6 +8,8 @@ import com.example.snsProject.model.DTO.UserDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -43,7 +45,11 @@ public class MemberService {
         return user;
     }
 
+    public List<HashMap<?,?>> SearchUsers(String search_input) {
+        return userDAO.SearchUsers(search_input);
+    }
     public void updateProfile(String email, String url) {
         userDAO.profileUpdate(url, email);
     }
 }
+

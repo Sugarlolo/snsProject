@@ -1,6 +1,7 @@
 package com.example.snsProject.controller;
 
 import com.example.snsProject.model.DTO.CommentDTO;
+import com.example.snsProject.model.DTO.CommentViewDTO;
 import com.example.snsProject.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -26,12 +27,14 @@ public class CommentController {
         CommentDTO commentValue = new CommentDTO(Long.parseLong(user.getUsername()),Long.parseLong(postId), comment);
         try {
             if (commentService.registerComment(commentValue)) {
+                CommentViewDTO dto = commentService.commentView(user.getUsername(), postId);
                 response.put("success", true);
                 response.put("count", commentService.commentListSize(postId));
-                response.put("message", "팔로우 취소 성공.");
+                response.put("message", "댓글 등록 성공.");
+                response.put("append", dto);
             } else {
                 response.put("success", false);
-                response.put("message", "팔로우 취소 실패.");
+                response.put("message", "댓글 등록 실패.");
             }
         } catch (Exception e) {
             e.printStackTrace();

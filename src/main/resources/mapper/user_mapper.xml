@@ -19,7 +19,7 @@
 
     <insert id="registerUser">
         <![CDATA[
-            insert into member (user_name, password, name, email, phone) values (#{userName}, #{password}, #{name}, #{email}, #{phone});
+            insert into member (user_name, password, name, email, phone, gender) values (#{userName}, #{password}, #{name}, #{email}, #{phone}, 0);
          ]]>
     </insert>
 
@@ -62,6 +62,12 @@
     <select id="findFollowUsers" resultType="com.example.snsProject.model.DTO.FollowDTO">
         <![CDATA[
             select * from follow where member_id = #{userId};
+        ]]>
+    </select>
+
+    <select id="SearchUsers" resultType="hashmap">
+        <![CDATA[
+            SELECT id, user_name, name, url From member WHERE name LIKE "%${search_input}%" OR user_name LIKE "%${search_input}%"
         ]]>
     </select>
 </mapper>

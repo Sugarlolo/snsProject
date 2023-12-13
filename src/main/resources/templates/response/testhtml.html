@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<script>
+    $(document).ready(function () {
+        $(".testbtn").click(function () {
+            var fileInput = $(this).closest(".tform").find(".tfile");
+            var selectedFile = fileInput[0].files[0];
+
+            if (selectedFile) {
+                var allowedExtensions = ["png", "jpg", "jpeg"];
+                var fileExtension = selectedFile.name.split('.').pop().toLowerCase();
+
+                if (allowedExtensions.indexOf(fileExtension) > -1) {
+                    console.log("선택한 파일 경로:", selectedFile.name);
+
+                    $(this).closest(".tform").submit();
+                } else {
+                    console.log("올바른 확장자가 아닙니다.");
+                }
+            } else {
+                console.log("파일을 선택하세요.");
+            }
+        });
+    });
+</script>
+<form action="/upload" method="post" enctype="multipart/form-data" class="tform">
+    <input type="file" class="tfile" name="file">
+    <input type="button" class="testbtn" value="Upload">
+</form>
+</body>
+</html>

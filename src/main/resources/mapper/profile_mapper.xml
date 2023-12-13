@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.snsProject.model.DAO.ProfileDAO">
+
+    <select id="CountPosts" resultType="long">
+        SELECT count(*) from test1.post WHERE member_id=#{member_id}
+    </select>
+
+    <select id="CountFollowers" resultType="long">
+        SELECT count(*) from test1.follow WHERE follow_member_id=#{member_id}
+    </select>
+
+    <select id="CountFollows" resultType="long">
+        SELECT count(*) from test1.follow WHERE member_id=#{member_id}
+    </select>
+
+    <select id="getProfileInfo" resultType="map">
+        SELECT * from test1.member where id=#{member_id}
+    </select>
+</mapper>
