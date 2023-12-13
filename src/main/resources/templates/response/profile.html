@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+   <meta charset="UTF-8">
+   <title>Document</title>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   <link rel="stylesheet" href="/css/profile.css">
+
+</head>
+
+<body>
+   <div id="profile_wrap">
+      <div id="profile_container">
+         <div id="profile_side_nav">
+            <div class="profile_nav_load"></div>
+         </div>
+         <div id="profile_box">
+            <main class="profile_main">
+               <div id="profile_main_for_align">
+                  <div id="profile_content_box">
+                      <header class="profile-setting" th:each="profileInfo : ${profileInfo}}">
+                          <div class="profile-image">
+                              <!--
+                              <img width="150px" height="150px" th:if="${not #strings.isEmpty(${profileImg})}" th:src="${profileImg}" alt="img/logo.png">
+                              <img width="150px" height="150px" th:unless="${not #strings.isEmpty(${profileImg})}" th:src="@{/img/logo.png}" alt="img/logo.png">
+                              -->
+                              <div th:if="${not #strings.isEmpty(profileInfo['url'])}"><img width="150px" height="150px" th:src="${profileInfo['url']}"></div>
+                              <div th:unless="${not #strings.isEmpty(profileInfo['url']}"><img width="150px" height="150px" th:src="@{/img/logo.png}"></div> <!--이미지url 없는 경우-->
+                          </div>
+                          <section class="profile-content">
+                            <div class="user-content">
+                              <span th:text="${profileInfo['user_name']}">대충 아이디</span>
+                              <div class="user-button">
+                                <input type="button" value="프로필 편집">
+                                <input type="button" value="보관된 스토리 보기">
+                              </div>
+                              <div class="user-setting"><i class="fa-solid fa-gear"></i></div>
+                            </div>
+                              <!--
+                            <ul class="nums">
+                              <li>게시물
+                              <span class="count" id="CountPost" th:text="${CountPosts.postCount}">0</span>
+                              </li>
+                              <li>팔로워
+                              <span class="count" id="CountFollows" th:text="${CountPosts.postFollows}">0</span>
+                              </li>
+                              <li>팔로우
+                              <span class="count" th:text="${CountPosts.postFollowers}">0</span>
+
+                              </li>
+                            </ul>
+                            -->
+                          </section>
+                      </header>
+                      <hr>
+                      <div class="post-bookmark">
+                        <a aria-selected="true" id="postLink" >
+                          <span class="category">게시물</span>
+                        </a>
+                        <a aria-selected="false" id="savedLink">
+                          <span class="category">저장됨</span>
+                        </a>
+                      </div>
+                      <div class="profile-board">
+                        <div class="none-board">
+                          <div class="none-image"><i class="fa-solid fa-camera"></i></div>
+                          <div class="share">
+                            <span>사진 공유</span>
+                          </div>
+                          <div class="share-notice">
+                            <span>사진을 공유하면 회원님의 프로필에 표시 됩니다.</span>
+                          </div>
+                          <br>
+                          <div class="post-board" role="button">첫 사진 공유하기</div>
+                        </div>
+
+                      </div>
+                      <div class="saved-board" style="display:none">
+                          <div class="add-board">
+                              <div class="add-only">
+                                  <span>저장한 내용은 회원님만 볼 수 있습니다.</span>
+                              </div>
+                              <div class="add-saved">
+                                  <div class="add-button" role="button">+ 새 컬렉션</div>
+                              </div>
+                          </div>
+                          <br>
+                        <div class="none-image"><i class="fa-regular fa-bookmark"></i></div>
+                        <div class="share">
+                            <br>
+                          <span>저장</span>
+                        </div>
+
+                        <div class="share-notice">
+                          <span>다시 보고 싶은 사진과 동영상을 저장하세요. 콘텐츠를 <br>
+                          저장해도 다른 사람에게 알림이 전송되지 않으며, 저장된 <br>
+                          콘텐츠는 회원님만 볼 수 있습니다</span>
+                        </div>
+                      </div>
+                  </div>
+               </div>
+            </main>
+         </div>
+      </div>
+   </div>
+    <script src="/js/profile.js"></script>
+</body>
+</html>

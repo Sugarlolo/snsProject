@@ -1,0 +1,108 @@
+
+#carouselExampleIndicators {
+    width: 65%;
+    height: 500px;
+    display: flex;
+}
+
+.carousel-item .carousel-item active {
+    width: 100%;
+    height: 100%;
+}
+
+.carousel-inner {
+    display: flex;
+}
+
+.carousel-item {
+    justify-content: center;
+}
+
+.carouselImg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    margin: auto;
+    display: block;
+}
+
+.modal-body {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0;
+}
+
+.modal-content {
+    width: 750px;
+}
+
+.none {
+    width: 900px;
+}
+
+.btn-close {
+    position: absolute;
+    top: -170px;
+    right: -250px;
+}
+
+.explore_feed_contents {
+    display: flex;
+    align-items: stretch;
+    width: 35%;
+    flex-direction: column;
+}
+.explore_feed_head {
+    width: 100%;
+    height: 13%;
+    display: flex;
+    justify-content: space-between;
+}
+.explore_feed_head_box {
+    width: 90%;
+    display: flex;
+}
+.explore_feed_head_ellipsis{
+    height: 100%;
+    width: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.explore_feed_head_imgbox {
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.explore_feed_head_img {
+    width: 36px;
+    height: 36px;
+    overflow: hidden;
+    border-radius: 50%;
+    display: flex;
+}
+.explore_feed_infobox {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.explore_feed_infobox1, .explore_feed_infobox2 {
+    height: 100%;
+}
+
+.explore_feed_inside {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+.explore_feed_scrolls {
+    overflow: auto;
+    width: 100%;
+    height: 75%;
+
+}

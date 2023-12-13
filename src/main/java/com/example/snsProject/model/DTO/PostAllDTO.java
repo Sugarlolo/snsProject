@@ -19,6 +19,7 @@ public class PostAllDTO {
     List<PostImageDTO> images;
     List<PostLikeDTO> likes;
     List<PostTagDTO> tags;
+    List<CommentViewDTO> comments;
     int commentSize;
     int likeYN;
     int bookmarkYN;

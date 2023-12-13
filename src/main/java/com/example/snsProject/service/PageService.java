@@ -25,7 +25,7 @@ public class PageService {
             postAll.setId(post.getId());
             postAll.setMemberId(post.getMemberId());
             postAll.setContent(post.getContent());
-            postAll.setDate(post.getDate());
+            postAll.setDate(ElapsedTimeCalculator.elapsedTime(post.getDate()));
             postAll.setUserName(post.getUserName());
             postAll.setName(post.getName());
             postAll.setEmail(post.getEmail());
@@ -33,6 +33,7 @@ public class PageService {
             postAll.setImages(getPostImages(postAll.getId()));
             postAll.setLikes(getPostLikes(postAll.getId()));
             postAll.setTags(getPostTags(postAll.getId()));
+            postAll.setComments(commentService.commentViewList(String.valueOf(post.getId()),userId));
             postAll.setCommentSize(commentService.commentListSize(post.getId().toString()));
             postAll.setLikeYN(postDAO.likePost(post.getId(), Long.valueOf(userId)));
             postAll.setBookmarkYN(bookmarkService.bookmarkYN(userId, String.valueOf(post.getId())));

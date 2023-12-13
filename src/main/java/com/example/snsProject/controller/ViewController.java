@@ -1,6 +1,7 @@
 package com.example.snsProject.controller;
 
 import com.example.snsProject.model.DTO.PostAllDTO;
+import com.example.snsProject.repository.Emoticon;
 import com.example.snsProject.service.FollowService;
 import com.example.snsProject.service.MemberService;
 import com.example.snsProject.service.PageService;
@@ -22,6 +23,7 @@ public class ViewController {
     private final MemberService memberService;
     private List<PostAllDTO> posts;
     private final FollowService followService;
+    private final Emoticon emoticon;
 
     @RequestMapping("/loginTest")
     public String login() throws Exception {
@@ -40,6 +42,7 @@ public class ViewController {
         posts = pageService.getPosts(user.getUsername(),0,8);
         model.addAttribute("followRecommends",followService.recommendFollow(user.getUsername()));
         model.addAttribute("loginUser", memberService.findUser(user.getUsername()));
+        model.addAttribute("emoticon", emoticon.getEmoticons());
         memberService.findUser(user.getUsername()).getUrl();
         model.addAttribute("posts", posts);
         String result_url = "/view/loginTest";

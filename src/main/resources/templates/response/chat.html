@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ChatRoom</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/DM.css}">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+</head>
+<body>
+<div id="chatroom" class="clearfix">
+    <div id="wrap1">
+        <div class="call_message">
+            <div class="user_id">User_Id</div>
+            <div class="about_message">
+                <div class="message">메시지<span class="help_message">요청</span><p class="help_message_count">(0)</p></div>
+            </div>
+            <div class="send_list" th:each="follower : ${result}">
+                <input type="hidden" th:value="${follower['id']}">
+                <div class="profile_img">
+                   <img th:unless="${not #strings.isEmpty(follower['url'])}" th:src="@{/img/logo.png}" alt="img/logo.png">
+                </div>
+                <span class="user_name" th:text="${follower['name']}">User_Name</span>
+            </div>
+            <div class="send_list" th:each="nfollower : ${nresult}">
+                <input type="hidden" th:value="${nfollower['id']}">
+                <div class="profile_img">
+                    <img th:src="${nfollower['url']}" alt="select_profile">
+                </div>
+                <span class="user_name" th:text="${nfollower['name']}">User_Name</span>
+            </div>
+        </div>
+    </div>
+    <div id="wrap2">
+        <div class="select_user">
+            <div class="about_selected_user">
+                <div class="profile_img2">
+                    <img src="/img/logo.png" alt="selected_profile">
+                </div>
+                <span class="selected_user_name">대화할 상대를 선택하세요.</span>
+                <span class="selected_user_ban">차단하기</span>
+            </div>
+        </div>
+        <div class="chatlist">
+            <div class="direct_list">
+                <div id="list_content" th:class="${follower['member_id'] eq target_id} ? left : right " th:each="follower : ${getMessage}">
+                    <span class="message" th:if="${follower['member_id'] eq target_id}" th:text="${follower['content']}">content</span>
+                    <span th:unless="${follower['member_id'] eq target_id}" th:text="${#dates.format(follower['DATE'],'a hh:mm')}">DATE</span>
+                    <span th:if="${follower['member_id'] eq target_id}" th:text="${#dates.format(follower['DATE'],'a hh:mm')}">DATE</span>
+                    <span class="message" th:unless="${follower['member_id'] eq target_id}" th:text="${follower['content']}">content</span>
+                </div>
+            </div>
+        </div>
+        <div class="input_chat">
+            <div class="custom-input">
+                <div class="feed_footer_emoteButton">
+                                                   <span>
+                                                      <i class="fa-regular fa-face-smile">
+                                                      </i>
+                                                      <div class="emoticonbox">
+                                                            <div class="emoticon" th:text="${emoticons}" th:each="emoticons : ${emoticon}"></div>
+                                                      </div>
+                                                   </span>
+                </div>
+                <input type="text" id="messageInput" placeholder="텍스트 입력...">
+                <div class="send_img"><i class="fa-regular fa-image"></i></div>
+                <button type="submit"><i class="fa-solid fa-circle-up" style="color: #417fe1;"></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" th:src="@{/JS/DM.js}"></script>
+</body>
+</html>
+
+
+

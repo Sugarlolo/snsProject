@@ -22,5 +22,16 @@
         ]]>
     </select>
 
+    <select id="commentViewList" resultType="com.example.snsProject.model.DTO.CommentViewDTO">
+        <![CDATA[
+             SELECT * FROM comment_user_view WHERE post_id = #{postId} and member_id = #{userId}
+        ]]>
+    </select>
+
+    <select id="commentView" resultType="com.example.snsProject.model.DTO.CommentViewDTO">
+        <![CDATA[
+             SELECT * FROM comment_user_view WHERE post_id = #{postId} and member_id = #{userId} order by date desc limit 1
+        ]]>
+    </select>
 
 </mapper>

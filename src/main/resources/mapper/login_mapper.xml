@@ -5,8 +5,8 @@
 <mapper namespace="com.example.snsProject.model.DAO.MemberRepository">
 
     <insert id="saveOrUpdate">
-        INSERT ignore INTO member (name, email)
-        VALUES (#{name}, #{email})
+        INSERT ignore INTO member (name, email, url, gender)
+        VALUES (#{name}, #{email}, #{url} ,0)
     </insert>
 
     <select id="findByUserName" resultType="com.example.snsProject.model.DTO.Member">
