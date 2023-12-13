@@ -75,3 +75,15 @@ $(document).ready(function (){
         }
     })
 })
+
+// $(document).ready(function () {
+//     $.ajax( {
+//         url: "",
+//         type: "",
+//         dataType: "",
+//
+//         success: function(data) {
+//
+//         }
+//     }
+// })
