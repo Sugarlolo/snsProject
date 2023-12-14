@@ -324,7 +324,6 @@ $(document).on('keypress', '.feed_footer_postComment2', function(event) {
              success: function (response) {
                             console.log("데이터 전송까진 됨");
                             if (response.success) {
-                                console.log("성공");
                                 var html = `
                                     <div class="explore_feed_head_box">
                                         <div class="explore_feed_head_imgbox">

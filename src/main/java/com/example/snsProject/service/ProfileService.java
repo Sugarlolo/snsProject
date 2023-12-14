@@ -1,8 +1,11 @@
 package com.example.snsProject.service;
 
+
 import com.example.snsProject.model.DAO.ProfileDAO;
-import com.example.snsProject.model.DAO.UserDAO;
-import com.example.snsProject.model.DTO.ProfileDTO;
+import com.example.snsProject.model.DTO.PostImageDTO;
+import com.example.snsProject.model.DTO.PostLikeDTO;
+import com.example.snsProject.model.DTO.PostTagDTO;
+import com.example.snsProject.model.DTO.PostViewDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,26 +18,125 @@ import java.util.Map;
 public class ProfileService {
     private final ProfileDAO profileDAO;
 
-    public int CountPosts(String id){
+    public long CountPosts(String id){
+
         return profileDAO.CountPosts(Long.parseLong(id)) ;
     }
-    public int CountFollows(String id){
+    public long CountFollows(String id){
         return profileDAO.CountFollows(Long.parseLong(id)) ;
 
     }
-    public int CountFollowers(String id){
+    public long CountFollowers(String id){
+
         return profileDAO.CountFollowers(Long.parseLong(id)) ;
     }
-
 
     public  List<Map<String,Object>> getProfileInfo(long member_id){
         List<Map<String,Object>> getProfileImg_result = null;
         try {
             getProfileImg_result = profileDAO.getProfileInfo(member_id);
+            if(getProfileImg_result.get(0).get("url") == null)
+                getProfileImg_result.get(0).put("url","");
+            if(getProfileImg_result.get(0).get("introduce") == null)
+                getProfileImg_result.get(0).put("introduce","");
         }catch (Exception e){
             e.printStackTrace();
             System.out.println("getProfileImg 에러!!!!");
         }
         return getProfileImg_result;
+    }
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public List<PostViewDTO> getPostsBookmark(String userIds){
+        List<PostViewDTO> result= null;
+        try {
+            result = profileDAO.getPostsBookmark(userIds);
+        } catch (Exception e){
+            e.printStackTrace();
+            System.out.println("getPosts 에러!!!!");
+        }
+        return result;
+    }
+
+    public List<PostViewDTO> getPosts(String userIds){       // 자신의 게시물을 몇개까지 가져올 건지
+        List<PostViewDTO> result= null;
+        try {
+            result = profileDAO.getPosts(userIds);
+        } catch (Exception e){
+            e.printStackTrace();
+            System.out.println("getPosts 에러!!!!");
+        }
+        return result;
+    }
+    List<PostImageDTO> getPostImages(Long postId){                            // postimage table
+        List<PostImageDTO> result= null;
+        try {
+            result = profileDAO.getPostImages(postId);
+        } catch (Exception e){
+            e.printStackTrace();
+            System.out.println("getPostImages 에러!!!!");
+        }
+        return result;
+    }
+    List<PostLikeDTO> getPostLikes(Long postId){                             // postlike table
+        List<PostLikeDTO> result= null;
+        try {
+            result = profileDAO.getPostLikes(postId);
+        } catch (Exception e){
+            e.printStackTrace();
+            System.out.println("getPostLikes 에러!!!!");
+        }
+        return result;
+    }
+    List<PostTagDTO> getPostTags(Long postImageId){                         // posttag table
+        List<PostTagDTO> result= null;
+        try {
+            result = profileDAO.getPostTags(postImageId);
+        } catch (Exception e){
+            e.printStackTrace();
+            System.out.println("getPostTags 에러!!!!");
+        }
+        return result;
+    }
+    int likePost(Long postId, Long userId){                                 // 좋아요 수 가져오기
+        int result = 0;
+        try {
+            result = profileDAO.likePost(postId, userId);
+        } catch (Exception e){
+            e.printStackTrace();
+            System.out.println("likePost 에러!!!!");
+        }
+        return result;
+    }
+    boolean registerLike(Long postId, Long userId){                        // 자신의 좋아요 on
+        boolean result = false;
+        try {
+            result = profileDAO.registerLike(postId, userId);
+        } catch (Exception e){
+            e.printStackTrace();
+            System.out.println("likePost 에러!!!!");
+        }
+        return result;
+    }
+    boolean cancelLike(Long postId, Long userId){                           // 자신의 좋아요 off
+        boolean result = false;
+        try {
+            result = profileDAO.cancelLike(postId, userId);
+        } catch (Exception e){
+            e.printStackTrace();
+            System.out.println("cancelLike 에러!!!!");
+        }
+        return result;
+    }
+    List<HashMap<?,?>> getImagesUrl(){                                      // post_image post_id
+        List<HashMap<?,?>> result= null;
+        try {
+            result = profileDAO.getImagesUrl();
+        } catch (Exception e){
+            e.printStackTrace();
+            System.out.println("getImagesUrl 에러!!!!");
+        }
+        return result;
     }
 }

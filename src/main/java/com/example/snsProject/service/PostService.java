@@ -24,4 +24,14 @@ public class PostService {
         return postDAO.getImagesUrl();
     }
 
+    public boolean registerPost(String userId, String postText, String postImageUrl) {
+        boolean result = false;
+        result =  postDAO.registerPost(userId, postText);
+        if (result) {
+            long id = postDAO.getRegisterPost(userId);
+            result = postDAO.registerPostImage(id, postImageUrl);
+        }
+        return result;
+    }
+
 }

@@ -60,5 +60,10 @@ public class ViewController {
     public String responsePost(@AuthenticationPrincipal UserDetails user, Model model) {
         return "response/posts";
     }
+    @RequestMapping("/registPost")
+    public String registPost(@AuthenticationPrincipal UserDetails user) {
+        return "response/registPost";
+    }
+
 
 }
