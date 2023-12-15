@@ -104,5 +104,15 @@
             member_id = #{userId} order by date desc limit 1;
         ]]>
     </select>
+    <update id="deletePost" statementType="CALLABLE">
+        <![CDATA[
+         { CALL DeletePostAndRelatedData(#{p_member_id, mode=IN, jdbcType=BIGINT}, #{p_post_id, mode=IN, jdbcType=BIGINT}) }
+        ]]>
+    </update>
 
+    <select id="getPost" resultType="int">
+        <![CDATA[
+            select count(*) post where id = #{postId} and member_id = #{userId};
+        ]]>
+    </select>
 </mapper>

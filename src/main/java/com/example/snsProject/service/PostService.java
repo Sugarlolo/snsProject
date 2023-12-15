@@ -33,5 +33,12 @@ public class PostService {
         }
         return result;
     }
-
+    public boolean deletePost(String userId, String postId) {
+        boolean result = false;
+        result = postDAO.deletePost(Long.parseLong(userId), Long.parseLong(postId));
+        return result;
+    }
+    public boolean getPost(String postId, String userId) {
+        return !(postDAO.getPost(Long.parseLong(postId), Long.parseLong(userId)) == 0);
+    }
 }
