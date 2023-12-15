@@ -24,4 +24,21 @@ public class PostService {
         return postDAO.getImagesUrl();
     }
 
+    public boolean registerPost(String userId, String postText, String postImageUrl) {
+        boolean result = false;
+        result =  postDAO.registerPost(userId, postText);
+        if (result) {
+            long id = postDAO.getRegisterPost(userId);
+            result = postDAO.registerPostImage(id, postImageUrl);
+        }
+        return result;
+    }
+    public boolean deletePost(String userId, String postId) {
+        boolean result = false;
+        result = postDAO.deletePost(Long.parseLong(userId), Long.parseLong(postId));
+        return result;
+    }
+    public boolean getPost(String postId, String userId) {
+        return !(postDAO.getPost(Long.parseLong(postId), Long.parseLong(userId)) == 0);
+    }
 }

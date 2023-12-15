@@ -19,5 +19,10 @@ public interface PostDAO {
     boolean registerLike(Long postId, Long userId);
     boolean cancelLike(Long postId, Long userId);
     List<HashMap<?,?>> getImagesUrl();
+    boolean registerPost(String userId, String postText);
+    long getRegisterPost(String userId);
+    boolean registerPostImage(Long postId, String postImageUrl);
+    boolean deletePost(long userId, long postId);
+    int getPost(long postId, long userId);
 
 }

@@ -13,9 +13,11 @@ a {
    width: 100%;
    min-height: 100vh;
    display: flex;
+   position: relative;
 }
 
 #profile_side_nav {
+    z-index: 5;
    position: fixed;
    top: 0;
 }
@@ -37,14 +39,17 @@ a {
 
 #profile_content_box {
    width: 100%;
-   max-width: 900px;
-
+   min-width: 900px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 .profile-setting {
    margin-top: 30px;
    display:flex;
-   margin-bottom: 40px;
-
+   justify-content: center;
+   padding-bottom: 40px;
+   border-bottom: 1px solid #ccc;
 }
 .profile-image{
    width: 300px;
@@ -87,21 +92,18 @@ a {
 .user-info{
    margin-top: 20px;
 }
-.post-bookmark{
-   text-align: center;
-   height: 50px;
-   margin-top : 15px;
-
+.post-bookmark-box{
+    display: flex;
+    justify-content: center;
+    text-align: center;
 }
-.post-bookmark #postLink {
-   display: inline-block;
-   margin-right : 50px;
+#postLink, #savedLink{
+    padding: 8px 20px;
 }
-.post-bookmark #postLink, #savedLink{
+.post-bookmark-box #postLink, #savedLink{
    cursor: pointer;
 }
 .profile-board{
-   text-align: center;
    justify-content: center;
    height : 300px;
 }
@@ -193,4 +195,19 @@ a {
 .add-button {
    cursor: pointer;
 }
-  
+
+#home_feed_bookmark_container{
+   width: 100%;
+   max-width: 630px;
+}
+#home_feed_bookmark_box1{
+   width: 630px;
+   margin-top: 20px;
+   display: flex;
+   align-items: center;
+   flex-direction: column;
+}
+#home_feed_bookmark_box2{
+   width: 540px;
+   max-width: 100%;
+}

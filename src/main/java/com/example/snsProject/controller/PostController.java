@@ -81,7 +81,6 @@ public class PostController {
     public ResponseEntity<?> responseImgUrl() {
         List<HashMap<?,?>> urlMap;
         urlMap = postService.getImagesUrl();
-        System.out.println("touched Explore");
         return ResponseEntity.ok(urlMap);
     }
 
@@ -91,6 +90,28 @@ public class PostController {
         urlMap = postService.getImagesUrl();
         model.addAttribute("result", urlMap);
         return "/explore/LoadContent";
+    }
+
+    @GetMapping("/deletePost")
+    public ResponseEntity<Map<String, Object>> deletePost(@RequestParam String postId, @AuthenticationPrincipal UserDetails user) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            if (postService.getPost(postId, user.getUsername())) {
+                if (postService.deletePost(user.getUsername(), postId)) {
+                    response.put("success", true);
+                    response.put("message", "삭제 완료하였습니다.");
+                } else {
+                    response.put("success", false);
+                    response.put("message", "삭제를 실패하였습니다.");
+                }
+            } else {
+                response.put("success", false);
+                response.put("message", "삭제 권한이 없습니다.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.ok(response);
     }
 
 //    @GetMapping("/{postId}")

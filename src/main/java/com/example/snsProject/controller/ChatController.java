@@ -63,8 +63,6 @@ public class ChatController {
             room_num = (long)session.getAttribute("room_id");
             getMessage = messageService.getAllMessage(room_num);                                    // 해당 방의 message_view내용 모든 것을 가져옴
 
-            //model.addAttribute("target_id",target_id);
-            //System.out.println(getMessage);
             long getMessageCount = messageService.getMessageCount();                                // 해당 방의 메시지 개수를 가져옴
             session.setAttribute("message_id",getMessageCount);                                  // 다음 메시지입력할 때 고유 id(= 해당방의 메시지 개수 (+1은 위에서 함))
             session.setAttribute("target_id",target_id);
