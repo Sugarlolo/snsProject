@@ -39,7 +39,6 @@ $(".right-submit").click(function () {
       console.log("선택한 파일 경로:", selectedFile.name);
       $(this).closest(".change-info").submit();
     } else {
-      console.log("올바른 확장자가 아닙니다.");
     }
   }
 });

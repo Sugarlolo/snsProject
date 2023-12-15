@@ -204,7 +204,7 @@ a {
    display: flex;
    flex-grow: 1;
 }
-.feed_footer_postComment, .feed_footer_postComment2{
+.feed_footer_postComment1, .feed_footer_postComment2{
    font-size: 14px;
    outline: none;
    border: none;

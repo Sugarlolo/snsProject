@@ -35,7 +35,7 @@
             width: 930px;
         }
 
-        .fa-solid.fa-copy {
+        .fa-copy {
             z-index: 1;
             position: absolute;
             color: whitesmoke;
@@ -80,7 +80,6 @@
             position: absolute;
             left: 0;
         }
-
     </style>
 
     <script>
@@ -89,13 +88,11 @@
             $(".explore_image").hover(function () {
                 $(this).css("background-color", "black");
                 $(this).find(".explore_thumbnail").css("opacity", 0.55);
-                $(this).find(".fa-solid").hide();
                 $(this).find(".explore_hover").css("visibility", "visible")
             }, function () {
                 $(this).css("background-color", "");
                 $(this).find(".explore_hover").css("visibility", "hidden")
                 $(this).find(".explore_thumbnail").css("opacity", 1);
-                $(this).find(".fa-solid").show();
             })
         })
     </script>
@@ -110,13 +107,23 @@
     <div class="explore_image_grid">
         <div th:each="post : ${posts}" class="explore_image">
             <input class="explore_image_id" type="hidden" th:value="${post.id}">
-            <img class="explore_thumbnail" th:src="${post.images[0].url}">
+            <img class="explore_thumbnail" th:src="${#lists.size(post.images) > 0 ? post.images[0].url : '/img/logo.png'}" onerror="this.src='/img/logo.png'">
             <div class="explore_hover">
                 <div class="explore_hover_comments">
                     <i th:text="${post.getCommentSize()} > 0 ? ${post.getCommentSize()} : 0" class="fa-regular fa-comment" style="font-size: 20px"></i>
                 </div>
                 <div class="explore_hover_likes">
-                    <i th:text="${#lists.size(post.getLikes())} > 0 ? ${#lists.size(post.getLikes())} : 0" class="fa-regular fa-heart" style="font-size: 20px"></i>
+                    <i th:if="${post.likeYN == 1}"
+                       th:text="${#lists.size(post.getLikes()) > 0 ? #lists.size(post.getLikes()) : 0}"
+                       th:class="${post.likeYN == 1} ? 'fa-solid fa-heart' : 'fa-regular fa-heart'"
+                       style="font-size: 20px; color: red"
+                       th:data-post-id="${post.id}"></i>
+
+                    <i th:if="${post.likeYN != 1}"
+                       th:text="${#lists.size(post.getLikes()) > 0 ? #lists.size(post.getLikes()) : 0}"
+                       th:class="${post.likeYN != 1} ? 'fa-regular fa-heart' : ''"
+                       style="font-size: 20px"
+                       th:data-post-id="${post.id}"></i>
                 </div>
             </div>
             <i th:if="${#lists.size(post.images)>1}" class="fa-solid fa-copy fa-2x fa-icon"></i>
@@ -124,5 +131,5 @@
     </div>
 </div>
 </body>
-<script src="/js/home.js"></script>
+<script src="/js/explore.js"></script>
 </html>

@@ -30,7 +30,6 @@ public class Profile_chService {
                 result.get(0).put("introduce","");
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println("getAllUserInfo 에러.");
         }
         return result;
     }
@@ -42,7 +41,6 @@ public class Profile_chService {
             profile_chDAO.updateUserInfo(url,introduce,gender,member_id);
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println("updateUserInfo error");
         }
     }
 

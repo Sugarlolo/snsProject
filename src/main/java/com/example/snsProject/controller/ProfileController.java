@@ -45,8 +45,6 @@ public class ProfileController {
 
         model.addAttribute("postbookmarkssizes", postAllBookmarkDTO.size());
         model.addAttribute("postbookmarks", postAllBookmarkDTO);
-        System.out.println(postAllBookmarkDTO.size());
-        System.out.println(postAllBookmarkDTO);
         
 
         return "response/profile";

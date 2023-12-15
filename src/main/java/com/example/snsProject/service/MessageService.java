@@ -17,7 +17,6 @@ public class MessageService {
             getMessage = messageDAO.getAllMessage(room_id);
         } catch (Exception e){
             e.printStackTrace();
-            System.out.println("MessageService getAllMessage 에러 발생!!!!");
         }
         return getMessage;
     }
@@ -30,7 +29,6 @@ public class MessageService {
         } catch (Exception e){
             insertMessage_flag = 0;
             e.printStackTrace();
-            System.out.println("insertMessage 에러 발생!!!!");
         }
         return insertMessage_flag;
     }
@@ -41,7 +39,6 @@ public class MessageService {
         } catch (Exception e){
             getMessageCount_flag = 0;
             e.printStackTrace();
-            System.out.println("getMessageCount 에러 발생!!!!");
         }
         return getMessageCount_flag;
     }

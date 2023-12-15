@@ -41,7 +41,6 @@ public class ProfileService {
                 getProfileImg_result.get(0).put("introduce","");
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println("getProfileImg 에러!!!!");
         }
         return getProfileImg_result;
     }
@@ -54,7 +53,6 @@ public class ProfileService {
             result = profileDAO.getPostsBookmark(userIds);
         } catch (Exception e){
             e.printStackTrace();
-            System.out.println("getPosts 에러!!!!");
         }
         return result;
     }
@@ -65,7 +63,6 @@ public class ProfileService {
             result = profileDAO.getPosts(userIds);
         } catch (Exception e){
             e.printStackTrace();
-            System.out.println("getPosts 에러!!!!");
         }
         return result;
     }
@@ -75,7 +72,6 @@ public class ProfileService {
             result = profileDAO.getPostImages(postId);
         } catch (Exception e){
             e.printStackTrace();
-            System.out.println("getPostImages 에러!!!!");
         }
         return result;
     }
@@ -85,7 +81,6 @@ public class ProfileService {
             result = profileDAO.getPostLikes(postId);
         } catch (Exception e){
             e.printStackTrace();
-            System.out.println("getPostLikes 에러!!!!");
         }
         return result;
     }
@@ -95,7 +90,6 @@ public class ProfileService {
             result = profileDAO.getPostTags(postImageId);
         } catch (Exception e){
             e.printStackTrace();
-            System.out.println("getPostTags 에러!!!!");
         }
         return result;
     }
@@ -105,7 +99,6 @@ public class ProfileService {
             result = profileDAO.likePost(postId, userId);
         } catch (Exception e){
             e.printStackTrace();
-            System.out.println("likePost 에러!!!!");
         }
         return result;
     }
@@ -115,7 +108,6 @@ public class ProfileService {
             result = profileDAO.registerLike(postId, userId);
         } catch (Exception e){
             e.printStackTrace();
-            System.out.println("likePost 에러!!!!");
         }
         return result;
     }
@@ -125,7 +117,6 @@ public class ProfileService {
             result = profileDAO.cancelLike(postId, userId);
         } catch (Exception e){
             e.printStackTrace();
-            System.out.println("cancelLike 에러!!!!");
         }
         return result;
     }
@@ -135,7 +126,6 @@ public class ProfileService {
             result = profileDAO.getImagesUrl();
         } catch (Exception e){
             e.printStackTrace();
-            System.out.println("getImagesUrl 에러!!!!");
         }
         return result;
     }

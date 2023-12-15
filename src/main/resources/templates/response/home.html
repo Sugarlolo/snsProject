@@ -36,7 +36,7 @@
                                           <div>
                                              <div class="feed_head_img_box2">
                                                 <a href="#" class="feed_head_img">
-                                                   <img alt="누군가의 프로필 사진" class="feed_head_profile_img" th:src="${post.getUrl}">
+                                                   <img alt="누군가의 프로필 사진" class="feed_head_profile_img" th:src="${post.getUrl}" onerror="this.src='/img/logo.png'">
                                                 </a>
                                              </div>
                                           </div>
@@ -102,7 +102,7 @@
                                              </div>
                                              <div class="carousel-inner">
                                                 <div th:each="image, iterStat : ${post.images}" th:class="${iterStat.first} ? 'carousel-item active' : 'carousel-item'">
-                                                   <img class="carouselImg" th:src="${image.url}" alt=""/>
+                                                   <img class="carouselImg" th:src="${image.url}" alt=""  onerror="this.src='/img/logo.png'"/>
                                                 </div>
                                              </div>
                                              <button class="carousel-control-prev" type="button" th:data-bs-target="'#carouselExampleIndicators'+${post.id}" data-bs-slide="prev">
@@ -173,7 +173,7 @@
                                           <form>
                                              <div class="feed_footer_inputBox">
                                                 <div class="feed_footer_postCommentBox">
-                                                   <input type="text" class="feed_footer_postComment" placeholder="댓글 달기.." >
+                                                   <input type="text" class="feed_footer_postComment1" placeholder="댓글 달기.." >
                                                    <input type="hidden"  th:value="${post.id}">
                                                 </div>
                                                 <div class="feed_footer_emoteButton">
@@ -210,7 +210,7 @@
                                                 </div>
                                                 <div class="carousel-inner">
                                                    <div th:each="image, iterStat : ${post.images}" th:class="${iterStat.first} ? 'carousel-item active' : 'carousel-item'">
-                                                      <img class="carouselImg" th:src="${image.url}" alt=""/>
+                                                      <img class="carouselImg" th:src="${image.url}" alt="" onerror="this.src='/img/logo.png'"/>
                                                    </div>
                                                 </div>
 
@@ -232,7 +232,7 @@
 
                                                       <div class="explore_feed_head_imgbox">
                                                          <a href="#" class="explore_feed_head_img">
-                                                            <img th:src="${post.getUrl}" alt="">
+                                                            <img th:src="${post.getUrl}" alt="" onerror="this.src='/img/logo.png'">
                                                          </a>
                                                       </div>
 
@@ -255,7 +255,7 @@
 
                                                            <div class="explore_feed_head_imgbox">
                                                                <a href="#" class="explore_feed_head_img">
-                                                                   <img th:src="${post.getUrl}" alt="">
+                                                                   <img th:src="${post.getUrl}" alt="" onerror="this.src='/img/logo.png'">
                                                                </a>
                                                            </div>
 
@@ -270,7 +270,7 @@
                                                        <div class="explore_feed_comment_box" th:each="comment : ${post.comments}">
                                                            <div class="explore_feed_comment_imgbox">
                                                                <a href="#" class="explore_feed_comment_img">
-                                                                   <img th:src="${comment.url}" alt="">
+                                                                   <img th:src="${comment.url}" alt="" onerror="this.src='/img/logo.png'">
                                                                </a>
                                                            </div>
 
@@ -377,7 +377,7 @@
                                  <div class="recommend_profile_align">
                                     <div>
                                        <a href="#" class="recommend_profile_link">
-                                          <img class="recommend_profile_img" th:src="${loginUser.url}" alt="#">
+                                          <img class="recommend_profile_img" th:src="${loginUser.url}" alt="#" onerror="this.src='/img/logo.png'">
                                        </a>
                                     </div>
                                  </div>
@@ -388,7 +388,7 @@
                                     </a>
                                  </div>
                                  <div class="recommend_name">
-                                    <span class="recommend_name_text" th:text="${loginUser.name}"></span>
+                                    <a href="/view/profile"><span class="recommend_name_text" th:text="${loginUser.name}"></span></a>
                                  </div>
                               </div>
                               <div class="recommend_userState_box">
@@ -429,7 +429,7 @@
                                                    <div class="recommend_profile_align">
                                                       <div>
                                                          <a href="#" class="recommend_profile_link">
-                                                            <img class="recommend_profile_img" th:src="${followRecommend.url}" alt="#">
+                                                            <img class="recommend_profile_img" th:src="${followRecommend.url}" alt="#" onerror="this.src='/img/logo.png'">
                                                          </a>
                                                       </div>
                                                    </div>

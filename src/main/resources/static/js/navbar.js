@@ -107,7 +107,6 @@ var searchTimeOut;
 
 $(document).on('keyup', '.search_input', function (event) {
     var search_input = $(this).val().trim();
-    console.log(search_input);
 
     clearTimeout(searchTimeOut);
 
@@ -120,7 +119,6 @@ $(document).on('keyup', '.search_input', function (event) {
                     search_input: search_input,
                 },
                 success: function (response) {
-                    console.log('Search Success:', response);
 
                     var searchResultContainer = $('#search_result');
                     searchResultContainer.empty();

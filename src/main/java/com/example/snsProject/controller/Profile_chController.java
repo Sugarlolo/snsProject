@@ -26,12 +26,12 @@ public class Profile_chController {
     public String profile_ch1(@AuthenticationPrincipal UserDetails user,
                               Model model){
         List<Map<String, Object>> result = null;
+
         try {
             result = profile_chService.getAllUserInfo(user.getUsername());
             model.addAttribute("result",result);
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println("get에러!");
         }
         return "response/profile_change";
     }
@@ -49,8 +49,6 @@ public class Profile_chController {
                 File dest = new File(uploadDir + file.getOriginalFilename());
                 File dest2 = new File(file.getOriginalFilename());
                 System.out.println("파일 경로: " + dest.getAbsolutePath());
-                System.out.println("소개글"+introduce);
-                System.out.println("성별"+gender);
                 file.transferTo(dest);
                 profile_chService.updateUserInfo(dest2.getName(),introduce,gender,user.getUsername());
                 model.addAttribute("message", "파일 업로드 성공!");

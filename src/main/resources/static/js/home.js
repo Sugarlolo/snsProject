@@ -107,7 +107,7 @@ $(document).on("click", ".recommend_follow", function() {
         }
 });
 
-$(document).on('keypress', '.feed_footer_postComment', function(event) {
+$(document).on('keypress', '.feed_footer_postComment1', function(event) {
     if (event.which === 13) {
         event.preventDefault();
 
@@ -115,7 +115,9 @@ $(document).on('keypress', '.feed_footer_postComment', function(event) {
         var comment = $(this).val();
         var postId = $(this).closest('form').find('input[type="hidden"]').val();
 
-
+        if(!comment.trim()) {
+            return
+        }
         $.ajax({
             type: 'GET',
             url: '/comment/registerComment',
@@ -128,6 +130,21 @@ $(document).on('keypress', '.feed_footer_postComment', function(event) {
               if (response.success) {
                  var newCommentSize = response.count;
                  var articleId = 'Post' + postId;
+                  var html = `
+                                                     <div class="explore_feed_head_box">
+                                                         <div class="explore_feed_head_imgbox">
+                                                             <a href="#" class="explore_feed_head_img">
+                                                                 <img src="${response.append.url}" alt="">
+                                                             </a>
+                                                         </div>
+                                                         <div class="explore_feed_infobox">
+                                                             <div class="explore_feed_infobox1">${response.append.name}</div>
+                                                             <div class="explore_feed_infobox2">${response.append.content}</div>
+                                                             <div class="explore_feed_infobox2">${response.append.date}</div>
+                                                         </div>
+                                                     </div>
+                                                 `;
+                                                 $('.explore_feed_scrolls').append(html);
 
                  $('#' + articleId + ' .feed_footer_commentNum').text(newCommentSize);
               }
@@ -160,7 +177,6 @@ $(document).on('click', ".fa-heart", function() {
                     success: function(response) {
                       if (response.success) {
                          alert(response.message);
-                         console.log(response.count)
                          likeNumElement.text(response.count);
                          likeNumElement2.text(response.count)
                          $('span.like-icon i[data-post-id="' + postId + '"]').prop('class', 'fa-regular fa-heart');
@@ -181,7 +197,6 @@ $(document).on('click', ".fa-heart", function() {
                  success: function(response) {
                    if (response.success) {
                       alert(response.message)
-                      console.log(response.count)
                       likeNumElement.text(response.count);
                        likeNumElement2.text(response.count)
                        $('span.like-icon i[data-post-id="' + postId + '"]').prop('class', 'fa-solid fa-heart');
@@ -253,15 +268,11 @@ $(document).on('click', function (event) {
     }
 });
 
-
 $(document).on('click', ".emoticon", function () {
-
     var emoticonText = $(this).text();
-    var postCommentInput = $(this).closest(".home_feed_contents").find(".feed_footer_postComment")
+    var postCommentInput = $(this).closest("form").find(".feed_footer_postComment1")
     var currentText = postCommentInput.val();
-     postCommentInput.val(currentText + emoticonText);
-
-
+    postCommentInput.val(currentText + emoticonText);
     postCommentInput.focus();
 });
 
@@ -299,12 +310,12 @@ $(document).on('click', ".emoticon", function () {
 $(document).on('keypress', '.feed_footer_postComment2', function(event) {
     if (event.which === 13) {
         event.preventDefault();
-        console.log("클릭")
 
         var comment = $(this).val();
         var postId = $(this).closest('form').find('input[type="hidden"]').val();
-        console.log("값 확인 : "+ comment + " " + postId)
-
+        if(!comment.trim()) {
+            return
+        }
         $.ajax({
             type: 'GET',
             url: '/comment/registerComment',
@@ -313,7 +324,6 @@ $(document).on('keypress', '.feed_footer_postComment2', function(event) {
                 postId: postId
             },
              success: function (response) {
-                            console.log("데이터 전송까진 됨");
                             if (response.success) {
                                 var html = `
                                     <div class="explore_feed_head_box">
@@ -355,7 +365,6 @@ $(document).on('click', ".menu_list_align button",function() {
                         postId: postId
                     },
                      success: function (response) {
-                        console.log("데이터 전송까진 됨");
                         alert(response.message);
                      },
                     error: function(error) {
@@ -365,16 +374,6 @@ $(document).on('click', ".menu_list_align button",function() {
                 });
     }
 })
-$(document).on('click', ".emoticon", function () {
-
-    var emoticonText = $(this).text();
-    var postCommentInput = $(this).closest(".home_feed_contents").find(".feed_footer_postComment")
-    var currentText = postCommentInput.val();
-     postCommentInput.val(currentText + emoticonText);
-
-
-    postCommentInput.focus();
-});
 
 function deletePost(e){
  var postId = $(e).closest('article').attr('id');
@@ -389,7 +388,6 @@ function deletePost(e){
 //                postId: postId
 //            },
 //            success: function(response) {
-//                console.log("데이터 전송까진 됨");
 //                alert(response.message);
 //            },
 //            error: function(error) {

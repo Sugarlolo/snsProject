@@ -50,7 +50,7 @@ public class HomeController {
                         "<div>\n" +
                         "<div class=\"feed_head_img_box2\">\n" +
                         "<a href=\"#\" class=\"feed_head_img\">\n" +
-                        "<img alt=\"프로필 사진\" class=\"feed_head_profile_img\" src=\""+post.getUrl()+"\">\n" +
+                        "<img alt=\"프로필 사진\" class=\"feed_head_profile_img\" src=\""+post.getUrl()+"\" onerror=\"this.src='/img/logo.png'\">\n" +
                         "</a>\n" +
                         "</div>\n" +
                         "</div>\n" +
@@ -100,7 +100,7 @@ public class HomeController {
                 htmlPost +="</div>   <div class=\"carousel-inner\"> " ;
                 for(int i=0;i<post.getImages().size();i++) {
                     htmlPost += "<div "+(i==0 ? " class=\"carousel-item active\">" : "class=\"carousel-item\">") +
-                            " <img class=\"carouselImg\" src=\""+ post.getImages().get(i).getUrl()+"\" alt=\"\"/>" +
+                            " <img class=\"carouselImg\" src=\""+ post.getImages().get(i).getUrl()+"\" alt=\"\" onerror=\"this.src='/img/logo.png'\"/>" +
                             "</div>";
                 }
                 htmlPost +="</div><button class=\"carousel-control-prev\" type=\"button\" data-bs-target=\"#carouselExampleIndicators"+post.getId()+"\" data-bs-slide=\"prev\">\n" +
@@ -208,7 +208,7 @@ public class HomeController {
                         "                                                <div class=\"carousel-inner\">\n" ;
                 for (int i = 0; i < post.getImages().size(); i++) {
                     htmlPost += "<div "+(i==0 ? " class=\"carousel-item active\">" : "class=\"carousel-item\">") +
-                            "<img class=\"carouselImg\" src=\""+post.getImages().get(i).getUrl()+"\" alt=\"\"/>"+
+                            "<img class=\"carouselImg\" src=\""+post.getImages().get(i).getUrl()+"\" alt=\"\" onerror=\"this.src='/img/logo.png'\"/>"+
                             "</div>";
                 }
                        htmlPost += "                                                </div>" +
@@ -230,7 +230,7 @@ public class HomeController {
                         "\n" +
                         "                                                      <div class=\"explore_feed_head_imgbox\">\n" +
                         "                                                         <a href=\"#\" class=\"explore_feed_head_img\">\n" +
-                        "                                                            <img src=\""+post.getUrl()+"\" alt=\"\">\n" +
+                        "                                                            <img src=\""+post.getUrl()+"\" alt=\"\" onerror=\"this.src='/img/logo.png'\">\n" +
                         "                                                         </a>\n" +
                         "                                                      </div>\n" +
                         "\n" +
@@ -253,7 +253,7 @@ public class HomeController {
                         "\n" +
                         "                                                           <div class=\"explore_feed_head_imgbox\">\n" +
                         "                                                               <a href=\"#\" class=\"explore_feed_head_img\">\n" +
-                        "                                                                    <img src=\""+post.getUrl()+"\" alt=\"\">\n" +
+                        "                                                                    <img src=\""+post.getUrl()+"\" alt=\"\" onerror=\"this.src='/img/logo.png'\">\n" +
                         "                                                               </a>\n" +
                         "                                                           </div>\n" +
                         "\n" +
@@ -269,7 +269,7 @@ public class HomeController {
                     htmlPost += "<div class=\"explore_feed_comment_box\">"+
                             "<div class=\"explore_feed_comment_imgbox\">" +
                             "<a href=\"#\" class=\"explore_feed_comment_img\">" +
-                            "<img src=\""+postComment.getUrl()+"\" alt=\"\">" +
+                            "<img src=\""+postComment.getUrl()+"\" alt=\"\" onerror=\"this.src='/img/logo.png'\">" +
                             "</a>" +
                             "</div>" +
                             "<div class=\"explore_feed_comment_infobox\">" +

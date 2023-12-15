@@ -81,7 +81,6 @@ public class PostController {
     public ResponseEntity<?> responseImgUrl() {
         List<HashMap<?,?>> urlMap;
         urlMap = postService.getImagesUrl();
-        System.out.println("touched Explore");
         return ResponseEntity.ok(urlMap);
     }
 

@@ -52,7 +52,6 @@ $(document).on('click', ".fa-heart", function() {
                     },
                     success: function(response) {
                       if (response.success) {
-                         console.log(response);
                          alert(response.message);
                          likeNumElement.text(response.count);
                          $this.prop('class', 'fa-regular fa-heart');
@@ -103,7 +102,6 @@ $(document).on('click', ".fa-bookmark", function() {
     var $this = $(this);
 
     if (className === "fa-solid fa-bookmark") {
-    console.log("클래스명은 구분함");
           $.ajax({
                     type: 'GET',
                     url: '/registerBookmark', //'/bookmark/registerBookmark' '/registerBookmark'
