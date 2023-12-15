@@ -4,6 +4,11 @@ var MenuItem = $('#nav_submenu');
 var searchBox = $('#search_box');
 var mainLogo = $('.logo_img');
 var miniLogo = $('#mini_insta_icon');
+var vw
+
+$(document).on('change', function() {
+    vw = $(window).width();
+});
 
 $('#submenu_btn').click(function () {
     if (MenuItem.css('display') === "none") {
@@ -57,7 +62,7 @@ function searchToggle() {
         animateDisplay(mainLogo);
         animateDisplay(miniLogo);
 
-    } else {
+    } else{
         MenuItem.css('display', 'none');
         aniSearchMove(searchBox);
         animateDisplay(mainLogo);
@@ -97,3 +102,62 @@ $(document).ready(function () {
 
     })
 });
+
+var searchTimeOut;
+
+$(document).on('keyup', '.search_input', function (event) {
+    var search_input = $(this).val().trim();
+
+    clearTimeout(searchTimeOut);
+
+    if (search_input.length > 0) {
+        searchTimeOut = setTimeout(function () {
+            $.ajax({
+                type: 'GET',
+                url: '/test/SearchUserResults',
+                data: {
+                    search_input: search_input,
+                },
+                success: function (response) {
+
+                    var searchResultContainer = $('#search_result');
+                    searchResultContainer.empty();
+
+                    if (response.result && response.result.length > 0) {
+                        response.result.forEach(function (result) {
+                            var outerDiv = $('<div>').addClass('search_otherUser_box1');
+                            var profileBox = $('<div>').addClass('search_profile_box');
+                            var profileAlign = $('<div>').addClass('search_profile_align');
+                            var link = $('<a>').attr('href', '#').addClass('search_profile_link');
+                            var img = $('<img>').attr('src', result.url).attr('alt', '').addClass('search_profile_img');
+                            var userinfoBox = $('<div>').addClass('search_userinfo_box');
+                            var userName = $('<div>').addClass('search_userName');
+                            var userNameLink = $('<span>').attr('href', '#').addClass('search_userName_link').text(result.user_name);
+                            var name = $('<div>').addClass('search_name');
+                            var nameText = $('<span>').addClass('search_name_text').text(result.name);
+
+                            userName.append(userNameLink);
+                            name.append(nameText);
+                            userinfoBox.append(userName);
+                            userinfoBox.append(name);
+                            profileAlign.append(link.append(img));
+                            profileBox.append(profileAlign);
+                            outerDiv.append(profileBox);
+                            outerDiv.append(userinfoBox);
+
+                            searchResultContainer.append(outerDiv);
+                        });
+                    } else {
+                        searchResultContainer.append('<div class="no-users"><span>일치하는 유저가 없습니다</span></div>');
+                                                                                                                     }
+                                                                                                                 },
+                                                                                                                 error: function (error) {
+                                                                                                                     // Handle the error
+                                                                                                                     console.log('Search failed:', error);
+                                                                                                                 }
+                                                                                                             });
+                                                                                                         }, 300);
+                                                                                                     } else {
+                                                                                                         $('#search_result').empty();
+                                                                                                     }
+                                                                                                 });

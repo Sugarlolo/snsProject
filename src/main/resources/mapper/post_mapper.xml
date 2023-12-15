@@ -82,4 +82,37 @@
         ]]>
     </select>
 
+    <insert id="registerPost">
+        <![CDATA[
+            insert into post values (null, #{userId}, #{postText}, now());
+        ]]>
+    </insert>
+
+    <insert id="registerPostImage">
+        <![CDATA[
+            insert into post_image values (null, #{postId}, #{postImageUrl}, null);
+        ]]>
+    </insert>
+
+    <select id="getRegisterPost" resultType="long" >
+        <![CDATA[
+            SELECT
+            id
+            FROM
+            post p
+            WHERE
+            member_id = #{userId} order by date desc limit 1;
+        ]]>
+    </select>
+    <update id="deletePost" statementType="CALLABLE">
+        <![CDATA[
+         { CALL DeletePostAndRelatedData(#{p_member_id, mode=IN, jdbcType=BIGINT}, #{p_post_id, mode=IN, jdbcType=BIGINT}) }
+        ]]>
+    </update>
+
+    <select id="getPost" resultType="int">
+        <![CDATA[
+            select count(*) post where id = #{postId} and member_id = #{userId};
+        ]]>
+    </select>
 </mapper>

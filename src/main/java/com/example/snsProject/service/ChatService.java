@@ -19,7 +19,6 @@ public class ChatService {
             result = chatDAO.getAllFollowers(member_id);
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println("getAllfollowers 에러!!!!");
         }
         return result;
     }
@@ -30,7 +29,6 @@ public class ChatService {
             result = chatDAO.getAllNotFollowers(member_id);
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println("getAllNotfollowers 에러!!!!");
         }
         return result;
     }
@@ -42,7 +40,6 @@ public class ChatService {
         } catch (Exception e) {
             selectRoom_result = 0;
             e.printStackTrace();
-            System.out.println("selectRoom 에러발생");
         }
 
         return selectRoom_result;
@@ -55,7 +52,6 @@ public class ChatService {
         } catch (Exception e){
             insertRoom_result = 0;
             e.printStackTrace();
-            System.out.println("insertRoom 에러발생");
         }
 
         return insertRoom_result;
@@ -68,7 +64,6 @@ public class ChatService {
         } catch (Exception e){
             getRoomId = 0;
             e.printStackTrace();
-            System.out.println("getRoomId 에러발생");
         }
         return getRoomId;
     }

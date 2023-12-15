@@ -1,15 +1,32 @@
-    package com.example.snsProject.model.DAO;
+package com.example.snsProject.model.DAO;
 
-    import org.apache.ibatis.annotations.Mapper;
+import com.example.snsProject.model.DTO.PostImageDTO;
+import com.example.snsProject.model.DTO.PostLikeDTO;
+import com.example.snsProject.model.DTO.PostTagDTO;
+import com.example.snsProject.model.DTO.PostViewDTO;
+import org.apache.ibatis.annotations.Mapper;
 
-    import java.util.List;
-    import java.util.Map;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-    @Mapper
-    public interface ProfileDAO {
-        int CountPosts(long id);
-        int CountFollowers(long id);
-        int CountFollows(long id);
+@Mapper
+public interface ProfileDAO {
+    long CountPosts(long id);
+    long CountFollowers(long id);
+    long CountFollows(long id);
 
-        List<Map<String,Object>> getProfileInfo(long member_id);
-    }
+    List<Map<String,Object>> getProfileInfo(long member_id);
+
+    List<PostViewDTO> getPostsBookmark(String userIds);
+
+    List<PostViewDTO> getPosts(String userIds);
+    List<PostImageDTO> getPostImages(Long postId);
+    List<PostLikeDTO> getPostLikes(Long postId);
+    List<PostTagDTO> getPostTags(Long postImageId);
+    int likePost(Long postId, Long userId);
+    boolean registerLike(Long postId, Long userId);
+    boolean cancelLike(Long postId, Long userId);
+    List<HashMap<?,?>> getImagesUrl();
+
+}

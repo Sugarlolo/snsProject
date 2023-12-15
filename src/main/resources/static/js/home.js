@@ -8,12 +8,12 @@ let currentScroll = 0
 let documentHeight = 0
 let nowHeight = 0
 let isLoading =false;
-//데이터 가져오는 함수
+
 function getData(limit){
     if (isLoading) {
         return;
     }
-	//다음페이지
+
 	nextPageLimit = (page + 1) * limit;
 
     isLoading = true
@@ -40,26 +40,24 @@ function getData(limit){
 }
 
 $(document).scroll(function(e){
-    //현재 높이 저장
+
     currentScroll = $(this).scrollTop();
-    //전체 문서의 높이
+
     documentHeight = $(document).height();
 
-    //(현재 화면상단 + 현재 화면 높이)
+
     nowHeight = $(this).scrollTop() + $(window).height();
 
 
-    //스크롤이 아래로 내려갔을때만 해당 이벤트 진행.
+
     if(currentScroll > lastScroll){
 
-        //nowHeight을 통해 현재 화면의 끝이 어디까지 내려왔는지 파악가능
-        //즉 전체 문서의 높이에 일정량 근접했을때 글 더 불러오기)
+
         if(documentHeight < (nowHeight + (documentHeight*0.1))){
             getData(8);
         }
     }
 
-    //현재위치 최신화
     lastScroll = currentScroll;
 });
 
@@ -88,7 +86,7 @@ $(document).on("click", ".recommend_follow", function() {
            		}
            	});
         } else {
-            // "팔로우" 버튼이 아닌 경우
+
             $.ajax({
                     type: "GET",
                     url: '/follow/followCancel',
@@ -109,15 +107,17 @@ $(document).on("click", ".recommend_follow", function() {
         }
 });
 
-$(document).on('keypress', '.feed_footer_postComment', function(event) {
+$(document).on('keypress', '.feed_footer_postComment1', function(event) {
     if (event.which === 13) {
         event.preventDefault();
 
-        // 폼 요소들의 값을 가져오기
+
         var comment = $(this).val();
         var postId = $(this).closest('form').find('input[type="hidden"]').val();
 
-        // AJAX를 사용하여 데이터 전송
+        if(!comment.trim()) {
+            return
+        }
         $.ajax({
             type: 'GET',
             url: '/comment/registerComment',
@@ -130,17 +130,31 @@ $(document).on('keypress', '.feed_footer_postComment', function(event) {
               if (response.success) {
                  var newCommentSize = response.count;
                  var articleId = 'Post' + postId;
-                 // 해당 article의 ID를 사용하여 댓글 개수 업데이트
+                  var html = `
+                                                     <div class="explore_feed_head_box">
+                                                         <div class="explore_feed_head_imgbox">
+                                                             <a href="#" class="explore_feed_head_img">
+                                                                 <img src="${response.append.url}" alt="">
+                                                             </a>
+                                                         </div>
+                                                         <div class="explore_feed_infobox">
+                                                             <div class="explore_feed_infobox1">${response.append.name}</div>
+                                                             <div class="explore_feed_infobox2">${response.append.content}</div>
+                                                             <div class="explore_feed_infobox2">${response.append.date}</div>
+                                                         </div>
+                                                     </div>
+                                                 `;
+                                                 $('.explore_feed_scrolls').append(html);
+
                  $('#' + articleId + ' .feed_footer_commentNum').text(newCommentSize);
               }
             },
             error: function(error) {
-                // 오류가 발생한 경우에 대한 처리
                 console.log(error);
             }
         });
 
-        // 폼 초기화
+
         $(this).val('');
     }
 });
@@ -150,7 +164,7 @@ $(document).on('click', ".fa-heart", function() {
     var className = $(this).attr('class');
     var $this = $(this);
 
-    // 좋아요 수를 나타내는 요소를 찾음
+
     var likeNumElement = $('#likeCount_' + postId);
     var likeNumElement2 = $('#likeCount2_' + postId);
     if (className === "fa-solid fa-heart") {
@@ -163,7 +177,6 @@ $(document).on('click', ".fa-heart", function() {
                     success: function(response) {
                       if (response.success) {
                          alert(response.message);
-                         console.log(response.count)
                          likeNumElement.text(response.count);
                          likeNumElement2.text(response.count)
                          $('span.like-icon i[data-post-id="' + postId + '"]').prop('class', 'fa-regular fa-heart');
@@ -171,7 +184,6 @@ $(document).on('click', ".fa-heart", function() {
                       }
                     },
                     error: function(error) {
-                        // 오류가 발생한 경우에 대한 처리
                         console.log(error);
                     }
                 });
@@ -185,7 +197,6 @@ $(document).on('click', ".fa-heart", function() {
                  success: function(response) {
                    if (response.success) {
                       alert(response.message)
-                      console.log(response.count)
                       likeNumElement.text(response.count);
                        likeNumElement2.text(response.count)
                        $('span.like-icon i[data-post-id="' + postId + '"]').prop('class', 'fa-solid fa-heart');
@@ -193,7 +204,6 @@ $(document).on('click', ".fa-heart", function() {
                    }
                  },
                  error: function(error) {
-                     // 오류가 발생한 경우에 대한 처리
                      console.log(error);
                  }
              });
@@ -218,7 +228,6 @@ $(document).on('click', ".fa-bookmark", function() {
                       }
                     },
                     error: function(error) {
-                        // 오류가 발생한 경우에 대한 처리
                         console.log(error);
                     }
                 });
@@ -236,7 +245,6 @@ $(document).on('click', ".fa-bookmark", function() {
                    }
                  },
                  error: function(error) {
-                     // 오류가 발생한 경우에 대한 처리
                      console.log(error);
                  }
              });
@@ -244,50 +252,44 @@ $(document).on('click', ".fa-bookmark", function() {
 });
 
 $(document).on('click', ".feed_footer_emoteButton .fa-face-smile", function (event) {
-    // 현재 클릭된 .fa-face-smile이 포함된 .feed_footer_emoteButton 내부의 .emoticonbox 요소에 대한 작업 수행
+
     var emoticonBox = $(this).closest('.feed_footer_emoteButton').find('.emoticonbox');
 
-    // 클릭 이벤트 전파 방지
+
     event.stopPropagation();
 
-    // .emoticonbox를 토글
     emoticonBox.toggle();
 });
 
-// 문서의 다른 부분을 클릭했을 때 이벤트 전파 방지
+
 $(document).on('click', function (event) {
-    // 현재 클릭된 요소가 .fa-face-smile 또는 .emoticonbox 내부에 속한 요소가 아니라면 모든 .emoticonbox를 닫음
     if (!$(event.target).hasClass('fa-face-smile') && $(event.target).closest('.emoticonbox').length === 0) {
         $(".feed_footer_emoteButton .emoticonbox").hide();
     }
 });
 
-
 $(document).on('click', ".emoticon", function () {
-    // 클릭된 .emoticon의 텍스트를 가져와서 댓글 입력란에 추가
     var emoticonText = $(this).text();
-    var postCommentInput = $(this).closest(".home_feed_contents").find(".feed_footer_postComment")
+    var postCommentInput = $(this).closest("form").find(".feed_footer_postComment1")
     var currentText = postCommentInput.val();
-     postCommentInput.val(currentText + emoticonText);
-
-    // 댓글 입력란에 포커스 설정
+    postCommentInput.val(currentText + emoticonText);
     postCommentInput.focus();
 });
 
 $(document).on('click', ".feed_footer_emoteButton .fa-face-smile", function (event) {
-    // 현재 클릭된 .fa-face-smile이 포함된 .feed_footer_emoteButton 내부의 .emoticonbox 요소에 대한 작업 수행
+
     var emoticonBox = $(this).closest('.feed_footer_emoteButton').find('.emoticonbox2');
 
-    // 클릭 이벤트 전파 방지
+
     event.stopPropagation();
 
-    // .emoticonbox를 토글
+
     emoticonBox.toggle();
 });
 
-// 문서의 다른 부분을 클릭했을 때 이벤트 전파 방지
+
 $(document).on('click', function (event) {
-    // 현재 클릭된 요소가 .fa-face-smile 또는 .emoticonbox 내부에 속한 요소가 아니라면 모든 .emoticonbox를 닫음
+
     if (!$(event.target).hasClass('fa-face-smile') && $(event.target).closest('.emoticonbox2').length === 0) {
         $(".feed_footer_emoteButton .emoticonbox2").hide();
     }
@@ -295,25 +297,25 @@ $(document).on('click', function (event) {
 
 
 $(document).on('click', ".emoticon", function () {
-    // 클릭된 .emoticon의 텍스트를 가져와서 댓글 입력란에 추가
+
     var emoticonText = $(this).text();
     var postCommentInput = $(this).closest("form").find(".feed_footer_postComment2")
     var currentText = postCommentInput.val();
      postCommentInput.val(currentText + emoticonText);
 
-    // 댓글 입력란에 포커스 설정
+
     postCommentInput.focus();
 });
 
 $(document).on('keypress', '.feed_footer_postComment2', function(event) {
     if (event.which === 13) {
         event.preventDefault();
-        console.log("클릭")
-        // 폼 요소들의 값을 가져오기
+
         var comment = $(this).val();
         var postId = $(this).closest('form').find('input[type="hidden"]').val();
-        console.log("값 확인 : "+ comment + " " + postId)
-        // AJAX를 사용하여 데이터 전송
+        if(!comment.trim()) {
+            return
+        }
         $.ajax({
             type: 'GET',
             url: '/comment/registerComment',
@@ -322,9 +324,7 @@ $(document).on('keypress', '.feed_footer_postComment2', function(event) {
                 postId: postId
             },
              success: function (response) {
-                            console.log("데이터 전송까진 됨");
                             if (response.success) {
-                                console.log("성공");
                                 var html = `
                                     <div class="explore_feed_head_box">
                                         <div class="explore_feed_head_imgbox">
@@ -343,12 +343,57 @@ $(document).on('keypress', '.feed_footer_postComment2', function(event) {
                             }
                         },
             error: function(error) {
-                // 오류가 발생한 경우에 대한 처리
+
                 console.log(error);
             }
         });
 
-        // 폼 초기화
+
         $(this).val('');
     }
 });
+
+$(document).on('click', ".menu_list_align button",function() {
+    var postId = $(this).closest('article').attr('id').substring(4);
+    var btnTxt = $(this).text();
+    console.log(btnTxt + " : " + postId);
+    if (btnTxt === '삭제') {
+         $.ajax({
+                    type: 'GET',
+                    url: '/post/deletePost',
+                    data: {
+                        postId: postId
+                    },
+                     success: function (response) {
+                        alert(response.message);
+                     },
+                    error: function(error) {
+
+                        console.log(error);
+                    }
+                });
+    }
+})
+
+function deletePost(e){
+ var postId = $(e).closest('article').attr('id');
+    var btnTxt = $(e).text();
+    console.log(btnTxt + " : " + postId);
+
+//    if (btnTxt === '삭제') {
+//        $.ajax({
+//            type: 'GET',
+//            url: '/post/deletePost',
+//            data: {
+//                postId: postId
+//            },
+//            success: function(response) {
+//                alert(response.message);
+//            },
+//            error: function(error) {
+//                // 오류가 발생한 경우에 대한 처리
+//                console.log(error);
+//            }
+//        });
+//    }
+}
