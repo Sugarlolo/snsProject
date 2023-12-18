@@ -335,8 +335,8 @@ a {
 
 .emoticonbox {
     position: absolute;
-    top: -600%;
-    left: 20px;
+    top: -70px;
+    left: 30px;
     right: 300px;
     width: 300px;
     border: 1px solid #ccc;

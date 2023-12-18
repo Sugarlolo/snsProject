@@ -104,17 +104,18 @@
                                             </div>
                                         </div>
                                     </div>
+
                                 <ul class="nums">
                                     <li>게시물
                                         <span class="count" id="CountPost" th:text="${CountPosts}">-1</span>
                                     </li>
                                     <li value="follower" onclick="openModalFollower()" style="cursor: pointer;">팔로워 <!--나를 팔로우 한 사람의 수-->
                                         <input id="follower_text" type="hidden" value="follower">
-                                        <span class="count" id="CountFollows" th:text="${CountFollows}">-1</span>
+                                        <span class="count" id="CountFollows" th:text="${CountFollowers}">-1</span>
                                     </li>
                                     <li value="follow" onclick="openModalFollow()" style="cursor: pointer;">팔로우 <!-- 내가 팔로우한 사람의 수-->
                                         <input id="follow_text" type="hidden" value="follow">
-                                        <span class="count" th:text="${CountFollowers}">-1</span>
+                                        <span class="count" th:text="${CountFollows}">-1</span>
                                     </li>
                                 </ul>
 

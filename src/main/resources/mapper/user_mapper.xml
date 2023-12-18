@@ -19,7 +19,7 @@
 
     <insert id="registerUser">
         <![CDATA[
-            insert into member (user_name, password, name, email, phone, gender) values (#{userName}, #{password}, #{name}, #{email}, #{phone}, 0);
+            insert into member (user_name, password, name, email, phone, gender, emoticon) values (#{userName}, #{password}, #{name}, #{email}, #{phone}, 0,"2;");
          ]]>
     </insert>
 

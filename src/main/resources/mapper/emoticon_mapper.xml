@@ -13,7 +13,7 @@
     
     <insert id="emoticonAdd">
         <![CDATA[
-             INSERT INTO emoticon_module(emoticon_id,url) VALUES (1, ${emoticon}});
+             INSERT INTO emoticon_module(emoticon_id,url) VALUES (1, #{emoticon});
         ]]>
     </insert>
 </mapper>

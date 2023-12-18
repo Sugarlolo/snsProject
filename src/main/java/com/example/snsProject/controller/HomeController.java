@@ -1,8 +1,10 @@
 package com.example.snsProject.controller;
 
 import com.example.snsProject.model.DTO.CommentViewDTO;
+import com.example.snsProject.model.DTO.EmoticonModuleDTO;
 import com.example.snsProject.model.DTO.PostAllDTO;
 import com.example.snsProject.repository.Emoticon;
+import com.example.snsProject.service.EmoticonService;
 import com.example.snsProject.service.FollowService;
 import com.example.snsProject.service.MemberService;
 import com.example.snsProject.service.PageService;
@@ -29,6 +31,7 @@ public class HomeController {
     private final MemberService memberService;
     private List<PostAllDTO> posts;
     private final Emoticon emoticon;
+    private final EmoticonService emoticonService;
 
     @GetMapping
     public String infiniteScrollPage(Model model) {
@@ -78,13 +81,29 @@ public class HomeController {
                         "</div>\n" +
                         "<div class=\"feed_head_more_box1\">\n" +
                         "<div class=\"feed_head_more_box2\">\n" +
-                        "<div class=\"feed_head_morePopup\">\n" +
+                        "<button type=\"button\" class=\"feed_head_morePopup\" data-bs-toggle=\"modal\" data-bs-target=\"#exampleModal\">\n" +
                         "<i class=\"fa-solid fa-ellipsis\"></i>\n" +
+                        "</button>\n" +
+                        "<!-- modal -->\n" +
+                        "<div class=\"modal\" id=\"exampleModal\" tabindex=\"-1\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n" +
+                        "<div class=\"modal-dialog modal-dialog-centered\" id=\"menu_align\">\n" +
+                        "<div class=\"none\">\n" +
+                        "<div class=\"modal_content menu_list_align\">\n" +
+                        "<button type=\"button\" class=\"btn_modal\" data-bs-dismiss=\"modal\" aria-label=\"\">삭제</button>\n" +
+                        "<button type=\"button\" class=\"btn_modal1\" data-bs-dismiss=\"modal\" aria-label=\"\">좋아요 수 숨기기</button>\n" +
+                        "<button type=\"button\" class=\"btn_modal1\" data-bs-dismiss=\"modal\" aria-label=\"\">댓글 기능 해제</button>\n" +
+                        "<button type=\"button\" class=\"btn_modal1\" data-bs-dismiss=\"modal\" aria-label=\"\">게시물로 이동</button>\n" +
+                        "<button type=\"button\" class=\"btn_modal1\" data-bs-dismiss=\"modal\" aria-label=\"\">링크 복사</button>\n" +
+                        " <button type=\"button\" class=\"btn_modal1\" data-bs-dismiss=\"modal\" aria-label=\"\">이 계정 정보</button>\n" +
+                        "<button type=\"button\" class=\"btn_modal1\" data-bs-dismiss=\"modal\" aria-label=\"Close\">취소</button>\n" +
                         "</div>\n" +
                         "</div>\n" +
                         "</div>\n" +
                         "</div>\n" +
                         "</div>\n" +
+                        "</div>\n" +
+                        "</div>\n" +
+                        "</div>" +
                         "<div class=\"home_feed_body\">\n" +
                         "<div class=\"feed_body_cont\">\n" +
                         "<div class=\"feed_body_list\">"+
@@ -100,7 +119,7 @@ public class HomeController {
                 htmlPost +="</div>   <div class=\"carousel-inner\"> " ;
                 for(int i=0;i<post.getImages().size();i++) {
                     htmlPost += "<div "+(i==0 ? " class=\"carousel-item active\">" : "class=\"carousel-item\">") +
-                            " <img class=\"carouselImg\" src=\""+ post.getImages().get(i).getUrl()+"\" alt=\"\" onerror=\"this.src='/img/logo.png'\"/>" +
+                            " <img class=\"carouselImg\" src=\""+ post.getImages().get(i).getUrl()+"\" alt=\"\" onerror=\"this.src='/img/logo.png'\" sizes=\"468px\"/>" +
                             "</div>";
                 }
                 htmlPost +="</div><button class=\"carousel-control-prev\" type=\"button\" data-bs-target=\"#carouselExampleIndicators"+post.getId()+"\" data-bs-slide=\"prev\">\n" +
@@ -176,8 +195,8 @@ public class HomeController {
                         "                                                      <i class=\"fa-regular fa-face-smile\">\n" +
                         "                                                      </i>\n" +
                         "                                                      <div class=\"emoticonbox\">\n";
-                for (String emoticon:emoticon.getEmoticons()) {
-                    htmlPost += "<div class=\"emoticon\">"+emoticon+"</div>\n";
+                for (EmoticonModuleDTO emoticon:emoticonService.selectEmoticonModule(memberService.findUser(user.getUsername()).getEmoticon())) {
+                    htmlPost += "<div class=\"emoticon\">"+emoticon.getUrl()+"</div>\n";
                 }
                         htmlPost += "                                                      </div>\n" +
                         "                                                   </span>\n" +
@@ -212,58 +231,50 @@ public class HomeController {
                             "</div>";
                 }
                        htmlPost += "                                                </div>" +
-                        "                                                <button class=\"carousel-control-prev\" type=\"button\" data-bs-target=\"#carouselExampleIndicators_"+post.getId()+"\" " +
-                        "                                                        data-bs-slide=\"prev\">\n" +
-                        "                                                   <span class=\"carousel-control-prev-icon\" aria-hidden=\"true\"></span>\n" +
-                        "                                                   <span class=\"visually-hidden\">Previous</span>\n" +
-                        "                                                </button>\n" +
-                        "                                                <button class=\"carousel-control-next\" type=\"button\" data-bs-target=\"#carouselExampleIndicators_"+post.getId()+"\" " +
-                        "                                                        data-bs-slide=\"next\">\n" +
-                        "                                                   <span class=\"carousel-control-next-icon\" aria-hidden=\"true\"></span>\n" +
-                        "                                                   <span class=\"visually-hidden\">Next</span>\n" +
-                        "                                                </button>\n" +
-                        "\n" +
-                        "                                             </div>\n" +
-                        "                                             <div class=\"explore_feed_contents\">\n" +
-                        "                                                <header class=\"explore_feed_head\">\n" +
-                        "                                                   <div class=\"explore_feed_head_box\">\n" +
-                        "\n" +
-                        "                                                      <div class=\"explore_feed_head_imgbox\">\n" +
-                        "                                                         <a href=\"#\" class=\"explore_feed_head_img\">\n" +
-                        "                                                            <img src=\""+post.getUrl()+"\" alt=\"\" onerror=\"this.src='/img/logo.png'\">\n" +
-                        "                                                         </a>\n" +
-                        "                                                      </div>\n" +
-                        "\n" +
+                        "<button class=\"carousel-control-prev\" type=\"button\" data-bs-target=\"#carouselExampleIndicators_"+post.getId()+"\" " +
+                        "data-bs-slide=\"prev\">\n" +
+                        "<span class=\"carousel-control-prev-icon\" aria-hidden=\"true\"></span>\n" +
+                        "<span class=\"visually-hidden\">Previous</span>\n" +
+                        "</button>\n" +
+                        "<button class=\"carousel-control-next\" type=\"button\" data-bs-target=\"#carouselExampleIndicators_"+post.getId()+"\" " +
+                        "data-bs-slide=\"next\">\n" +
+                        "<span class=\"carousel-control-next-icon\" aria-hidden=\"true\"></span>\n" +
+                        "<span class=\"visually-hidden\">Next</span>\n" +
+                        "</button>\n" +
+                        "</div>\n" +
+                        "<div class=\"explore_feed_contents\">\n" +
+                        "<header class=\"explore_feed_head\">\n" +
+                        "<div class=\"explore_feed_head_box\">\n" +
+                        "<div class=\"explore_feed_head_imgbox\">\n" +
+                        "<a href=\"#\" class=\"explore_feed_head_img\">\n" +
+                        "<img src=\""+post.getUrl()+"\" alt=\"\" onerror=\"this.src='/img/logo.png'\">\n" +
+                        "</a>\n" +
+                        "</div>\n" +
                         "                                                      <div class=\"explore_feed_infobox\">\n" +
                         "                                                         <div class=\"explore_feed_infobox1\" text=\""+post.getName()+"\">\n" +
                         "                                                         </div>\n" +
                         "                                                         <div class=\"explore_feed_infobox2\" text=\""+post.getUserName()+"\">\n" +
                         "                                                         </div>\n" +
                         "                                                      </div>\n" +
-                        "\n" +
                         "                                                   </div>\n" +
                         "                                                   <div class=\"explore_feed_head_ellipsis\">\n" +
                         "                                                      <i class=\"fa-solid fa-ellipsis fa-lg\"></i>\n" +
                         "                                                   </div>\n" +
                         "                                                </header>\n" +
-                        "\n" +
                         "                                                <div class=\"explore_feed_inside\">\n" +
                         "                                                   <div class=\"explore_feed_scrolls\">\n" +
                         "                                                       <div class=\"explore_feed_head_box\">\n" +
-                        "\n" +
                         "                                                           <div class=\"explore_feed_head_imgbox\">\n" +
                         "                                                               <a href=\"#\" class=\"explore_feed_head_img\">\n" +
                         "                                                                    <img src=\""+post.getUrl()+"\" alt=\"\" onerror=\"this.src='/img/logo.png'\">\n" +
                         "                                                               </a>\n" +
                         "                                                           </div>\n" +
-                        "\n" +
                         "                                                           <div class=\"explore_feed_infobox\">\n" +
                         "                                                               <div class=\"explore_feed_infobox1\" text=\""+post.getName()+"\">\n" +
                         "                                                               </div>\n" +
                         "                                                               <div class=\"explore_feed_infobox2\" text=\""+post.getContent()+"\">\n" +
                         "                                                               </div>\n" +
                         "                                                           </div>\n" +
-                        "\n" +
                         "                                                       </div>\n";
                 for (CommentViewDTO postComment:post.getComments()) {
                     htmlPost += "<div class=\"explore_feed_comment_box\">"+
@@ -280,10 +291,9 @@ public class HomeController {
                             "<div class=\"explore_feed_comment_infobox2\" text=\""+postComment.getDate()+"\">" +
                             "</div>" +
                             "</div>" +
-                            "</div>" +
                             "</div>";
                 }
-                htmlPost +=      "                                                   <div class=\"explore_feed_footer\">\n" +
+                htmlPost += "</div><div class=\"explore_feed_footer\">\n" +
                         "                                                      <div class=\"home_feed_footer\">\n" +
                         "                                                         <div class=\"feed_footer_cont\">\n" +
                         "                                                            <div class=\"feed_footer_actionBox\">\n" +
@@ -340,8 +350,8 @@ public class HomeController {
                         "                                                                              <i class=\"fa-regular fa-face-smile\">\n" +
                         "                                                                              </i>\n" +
                         "                                                                              <div class=\"emoticonbox2\">\n";
-                for (String emoticon:emoticon.getEmoticons()) {
-                    htmlPost += "<div class=\"emoticon\" >"+emoticon+"</div>\n";
+                for (EmoticonModuleDTO emoticon:emoticonService.selectEmoticonModule(memberService.findUser(user.getUsername()).getEmoticon())) {
+                    htmlPost += "<div class=\"emoticon\">"+emoticon.getUrl()+"</div>\n";
                 }
         htmlPost +=     "                                                                              </div>\n" +
                         "                                                                           </span>\n" +

@@ -40,12 +40,4 @@ public class Emoticon {
         emoticonDAO.emoticonAdd(emoticon);
     }
 
-    public static void main(String[] args) {
-        ApplicationContext context = new AnnotationConfigApplicationContext(Emoticon.class);
-
-        Emoticon emoticon = context.getBean(Emoticon.class);
-        for (int i = 3; i < Emoticon.repository.getEmoticons().length; i++) {
-            emoticon.emoticonAdd(Emoticon.repository.getEmoticons()[i]);
-        }
-    }
 }

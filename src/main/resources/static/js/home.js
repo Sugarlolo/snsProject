@@ -258,6 +258,7 @@ $(document).on('click', ".feed_footer_emoteButton .fa-face-smile", function (eve
 
     event.stopPropagation();
 
+    emoticonBox.css('top', -(emoticonBox.height()) + 'px');
     emoticonBox.toggle();
 });
 

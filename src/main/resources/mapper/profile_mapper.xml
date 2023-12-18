@@ -90,8 +90,10 @@
     </delete>
 
 
-    <select id="getAllFollowers" parameterType="long" resultType="map">
-        <![CDATA[
+
+    <select id="getAllFollowers" resultType="map" parameterType="long">
+
+    <![CDATA[
             SELECT m.id, m.name,m.email,m.phone,m.url, m.user_name
             FROM follow f
             LEFT OUTER JOIN member m ON m.id = f.member_id
@@ -99,8 +101,10 @@
         ]]>
     </select>
 
+
     <select id="getMyFollowers" resultType="map">
-        <![CDATA[
+
+    <![CDATA[
             SELECT m.id, m.name,m.email,m.phone,m.url, m.user_name
             FROM follow f
             LEFT OUTER JOIN member m ON m.id = f.member_id
@@ -108,8 +112,10 @@
         ]]>
     </select>
 
-    <select id="getAllFollows" parameterType="long" resultType="map">
-        <![CDATA[
+
+    <select id="getAllFollows" resultType="map" parameterType="long">
+
+    <![CDATA[
             SELECT m.id, m.name,m.email,m.phone,m.url, m.user_name
             FROM follow f
             LEFT OUTER JOIN member m ON m.id = f.follow_member_id
@@ -117,8 +123,10 @@
         ]]>
     </select>
 
+
     <select id="getMyFollows" resultType="map">
-        <![CDATA[
+
+    <![CDATA[
             SELECT m.id, m.name,m.email,m.phone,m.url, m.user_name
             FROM follow f
             LEFT OUTER JOIN member m ON m.id = f.follow_member_id
