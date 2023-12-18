@@ -25,5 +25,6 @@
         <mapper resource="mapper/message_mapper.xml"/>
         <mapper resource="mapper/profile_mapper.xml"/>
         <mapper resource="mapper/profile_ch_mapper.xml"/>
+        <mapper resource="mapper/emoticon_mapper.xml"/>
     </mappers>
 </configuration>

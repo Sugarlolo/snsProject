@@ -14,8 +14,8 @@
       <div class="profile">
         <div class="left">
           <div class="hide">
-            <img  th:if="${not #strings.isEmpty(user.url)}" th:src="@{$user.url}" onclick="openFileInput()">
-            <img  th:if="${#strings.isEmpty(user.url)}" th:src="@{/img/logo.png}" onclick="openFileInput()">
+            <img th:if="${not #strings.isEmpty(user.url)}" th:src="@{${user.url}}" onclick="openFileInput()">
+            <img th:if="${#strings.isEmpty(user.url)}" th:src="@{/img/logo.png}" onclick="openFileInput()">
           </div>
         </div>
         <div class="profile-idimg">

@@ -27,6 +27,12 @@ public interface ProfileDAO {
     int likePost(Long postId, Long userId);
     boolean registerLike(Long postId, Long userId);
     boolean cancelLike(Long postId, Long userId);
-    List<HashMap<?,?>> getImagesUrl();
+    List<Map<String,Object>> getAllFollowers(long member_id);
+
+    List<Map<String,Object>> getMyFollowers (String user_id, long member_id);
+
+    List<Map<String,Object>> getAllFollows(long member_id);
+    List<Map<String,Object>> getMyFollows (String user_id, long member_id);
+
 
 }

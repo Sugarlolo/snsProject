@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="/css/home.css">
     <link rel="stylesheet" href="/css/home2.css">
     <link rel="stylesheet" href="/css/loadPost.css">
+    <link rel="stylesheet" href="/css/followers.css">
 </head>
 
 <body>
@@ -34,7 +35,7 @@
                             </div>
                             <section class="profile-content">
                                 <div class="user-content">
-                                    <span th:text="${profileInfo['Name']}">testid</span>
+                                    <span th:text="${profileInfo['name']}">testid</span>
                                     <div class="user-button">
                                         <a href="profile_ch">
                                         <input type="button" value="프로필 편집">
@@ -43,15 +44,76 @@
                                     </div>
                                     <div class="user-setting"><i class="fa-solid fa-gear"></i></div>
                                 </div>
+                                <div class="modal-backdrop" id="modalBackdrop"></div>
 
+                                <div id="follower_click">
+                                    <div class="modal" id="myModal">
+                                        <div class="modal_content">
+                                            <h4 id="follower_title">나를 팔로우 한 유저</h4>
+                                            <div class="close-btn" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></div>
+                                        </div>
+
+                                        <div id="search_main">
+                                            <div id="search_sub_content">
+                                                <div id="search_input_box">
+                                                    <input type="text" class="search_input" placeholder="검색">
+                                                    <div id="search_input_reset">
+
+                                                    </div>
+                                                    <div id="search_icon_box">
+                                                        <div id="search_icon_input">
+                                                            <div id="temp_div_for_align1">
+                                                                <i class="fa-solid fa-magnifying-glass"></i>
+                                                            </div>
+                                                            <div id=temp_div_for_align2>
+                                                                <input type="text" class="search_input" placeholder="검색" >
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="search_main_content">
+                                                <div id="search_info"></div>
+                                                <div id="search_result">
+                                                    <div class="follower_list" id="follower_list">
+                                                        <div class="follower_list_info" th:each="follower : ${followers}">
+                                                            <div class="follower_list_img">
+                                                                <img th:if="${ #strings.isEmpty(follower.url) }" th:src="@{/img/logo.png}">
+                                                                <img th:unless="${ #strings.isEmpty(follower.url) }" th:src="${follower.url}">
+                                                            </div>
+                                                            <div class="follower_name_info">
+
+                                                                <div class="follower_list_user_name" th:text="${follower['user_name']}" >user_name</div>
+                                                                <div class="follower_list_name" th:text="${follower['name']}">name</div>
+
+                                                                <input type="hidden" th:value="${follower['id']}">
+                                                                <button th:id="'follower_list_follow'+${follower['id']}" class="follower_button"
+                                                                        th:if="${ #strings.isEmpty(follower['follow_check']) }" th:value="${follower['id']}">
+
+                                                                    <span>팔로우함</span>
+                                                                </button>
+                                                                <button th:id="'follower_list_follow'+${follower['id']}" class="follower_button"
+                                                                        th:if="${follower['follow_check'] == 'true'}" th:value="${follower['id']}">
+
+                                                                    <span>팔로우</span>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 <ul class="nums">
                                     <li>게시물
                                         <span class="count" id="CountPost" th:text="${CountPosts}">-1</span>
                                     </li>
-                                    <li>팔로워 <!--나를 팔로우 한 사람의 수-->
+                                    <li value="follower" onclick="openModalFollower()" style="cursor: pointer;">팔로워 <!--나를 팔로우 한 사람의 수-->
+                                        <input id="follower_text" type="hidden" value="follower">
                                         <span class="count" id="CountFollows" th:text="${CountFollows}">-1</span>
                                     </li>
-                                    <li>팔로우 <!-- 내가 팔로우한 사람의 수-->
+                                    <li value="follow" onclick="openModalFollow()" style="cursor: pointer;">팔로우 <!-- 내가 팔로우한 사람의 수-->
+                                        <input id="follow_text" type="hidden" value="follow">
                                         <span class="count" th:text="${CountFollowers}">-1</span>
                                     </li>
                                 </ul>
@@ -62,18 +124,22 @@
                         </header>
                         <div class="post-bookmark-box">
                             <div class="post-bookmark">
-                                <a aria-selected="true" id="postLink" >
-                                    <span class="category">게시물</span>
-                                </a>
-                                <a aria-selected="false" id="savedLink">
-                                    <span class="category">저장됨</span>
-                                </a>
+                                <div class="post_box">
+                                    <a aria-selected="true" id="postLink" >
+                                        <span class="category">게시물</span>
+                                    </a>
+                                </div>
+                                <div class="saved_box">
+                                    <a aria-selected="false" id="savedLink">
+                                        <span class="category">저장됨</span>
+                                    </a>
+                                </div>
                             </div>
                         </div>
 
 
 
-
+                    <div id="home_feed_wrap">
                         <div id="home_feed_container">
                             <div id="home_feed_box1">
                                 <div id="home_feed_box2">
@@ -413,17 +479,18 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
 
 
 
 
 
-
-                        <div class="saved-board" style="display:none" id="home_feed_bookmark_container">
+                    <div id="home_feed_bookmark_wrap" style="display:none">
+                        <div id="home_feed_bookmark_container">
                             <div id="home_feed_bookmark_box1">
                                 <div id="home_feed_bookmark_box2">
                                     <div>
-                                        <div th:if="${postbookmarkssizes} == 0">
+                                        <div class="saved-board" th:if="${postbookmarkssizes} == 0">
                                             <div class="add-board">
                                                 <div class="add-only">
                                                     <span>저장한 내용은 회원님만 볼 수 있습니다.</span>
@@ -768,11 +835,13 @@
                             </div>
                         </div>
                     </div>
+                    </div>
                 </div>
             </main>
         </div>
     </div>
 </div>
 <script src="/js/profile.js"></script>
+<script type="text/javascript" src="/js/followers.js"></script>
 </body>
 </html>

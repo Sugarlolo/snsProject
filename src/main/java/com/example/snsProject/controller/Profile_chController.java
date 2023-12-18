@@ -2,6 +2,7 @@ package com.example.snsProject.controller;
 
 import com.example.snsProject.service.Profile_chService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,28 +41,40 @@ public class Profile_chController {
     }
 
     @PostMapping("/view/profile_ch2")
-    public String profile_ch2(@AuthenticationPrincipal UserDetails user,
-                              @RequestParam("file") MultipartFile file,
-                              @RequestParam("introduce") String introduce,
-                              @RequestParam("gender") int gender,
-                              Model model){
-        if (!file.isEmpty()) {
-            try {
-                String uploadDir = "C:\\snsProject-main\\src\\main\\resources\\static\\img\\";
-                String selectDir = "/img/";
-                File dest = new File(uploadDir + file.getOriginalFilename());
-                File dest2 = new File(file.getOriginalFilename());
-                System.out.println("파일 경로: " + dest.getAbsolutePath());
-                file.transferTo(dest);
-                profile_chService.updateUserInfo(dest2.getName(),introduce,gender,user.getUsername());
-                model.addAttribute("message", "파일 업로드 성공!");
-            } catch (IOException e) {
-                e.printStackTrace();
-                model.addAttribute("message", "파일 업로드 실패: " + e.getMessage());
-            }
-        } else {
-            model.addAttribute("message", "파일이 비어있습니다.");
+    public ResponseEntity<Map<String, Object>> profile_ch2(
+            @AuthenticationPrincipal UserDetails user,
+            @RequestParam("file") MultipartFile file,
+            @RequestParam("introduce") String introduce,
+            @RequestParam("gender") int gender) {
+
+        Map<String, Object> response = new HashMap<>();
+
+        if (file.isEmpty()) {
+            response.put("success", false);
+            response.put("message", "파일이 비어있습니다.");
+            return ResponseEntity.ok(response);
         }
-       return "response/home";
+
+        try {
+            String uploadDir = "C:\\spring\\snsProject-main\\snsProject\\src\\main\\resources\\static\\img\\";
+
+            String originalFileName = file.getOriginalFilename();
+            LocalDateTime currentDateTime = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+            String formattedDateTime = currentDateTime.format(formatter);
+            File dest = new File(uploadDir + formattedDateTime +file.getOriginalFilename());
+            file.transferTo(dest);
+
+            profile_chService.updateUserInfo("/img/" + dest.getName(), introduce, gender, user.getUsername());
+
+            response.put("success", true);
+            response.put("message", "파일 업로드 성공!");
+        } catch (IOException e) {
+            e.printStackTrace();
+            response.put("success", false);
+            response.put("message", "파일 업로드 실패: " + e.getMessage());
+        }
+
+        return ResponseEntity.ok(response);
     }
 }

@@ -102,7 +102,7 @@
                                              </div>
                                              <div class="carousel-inner">
                                                 <div th:each="image, iterStat : ${post.images}" th:class="${iterStat.first} ? 'carousel-item active' : 'carousel-item'">
-                                                   <img class="carouselImg" th:src="${image.url}" alt=""  onerror="this.src='/img/logo.png'"/>
+                                                   <img class="carouselImg" th:src="${image.url}" alt=""  onerror="this.src='/img/logo.png'" sizes="468px"/>
                                                 </div>
                                              </div>
                                              <button class="carousel-control-prev" type="button" th:data-bs-target="'#carouselExampleIndicators'+${post.id}" data-bs-slide="prev">
@@ -181,7 +181,7 @@
                                                       <i class="fa-regular fa-face-smile">
                                                       </i>
                                                       <div class="emoticonbox">
-                                                            <div class="emoticon" th:text="${emoticons}" th:each="emoticons : ${emoticon}"></div>
+                                                            <div class="emoticon" th:text="${emoticons.url}" th:each="emoticons : ${emoticon}"></div>
                                                       </div>
                                                    </span>
                                                 </div>

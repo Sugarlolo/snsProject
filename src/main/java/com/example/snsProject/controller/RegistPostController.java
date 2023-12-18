@@ -33,8 +33,9 @@ public class RegistPostController {
         Map<String, Object> response = new HashMap<>();
         try {
             UserDTO userDTO = memberService.findUser(user.getUsername());
-            response.put("userId", user.getUsername());
+            response.put("userId", userDTO.getName());
             response.put("url", userDTO.getUrl());
+            response.put("success", true);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -44,24 +45,28 @@ public class RegistPostController {
     @PostMapping("/upload")
     public ResponseEntity<Map<String, Object>> handleFileUpload(
             @AuthenticationPrincipal UserDetails user,
-            @RequestPart("file") MultipartFile file,
-            @RequestPart("text") String text,
-            @RequestPart("file_name") String file_name){
+            @RequestPart("file") MultipartFile[] file,
+            @RequestPart("text") String text){
         Map<String, Object> response = new HashMap<>();
-        file_name = file_name + System.currentTimeMillis() + ".png";
+
         HttpHeaders headers = new HttpHeaders();
         headers.setCacheControl(CacheControl.noCache().getHeaderValue());
         // 파일 및 텍스트 데이터 처리 로직 작성s
-        if (!file.isEmpty()) {
+        if (!file[0].isEmpty()) {
             try {
+                String[] file_name = new String[file.length];
+                for (int i = 0; i < file.length; i++) {
+                    file_name[i] = "upload_img_" + System.currentTimeMillis() + i + ".png";
+                }
                 // 저장할 경로 설정 (원하는 경로로 수정)
-                /*String uploadDir = "C:\\Users\\dita810\\Desktop\\snsProject\\src\\main\\resources\\static\\img\\";*/
+//                String uploadDir = "C:\\Users\\dita810\\Desktop\\snsProject (2)\\src\\main\\resources\\static\\img\\";
                 String uploadDir = "C:\\spring\\snsProject-main\\snsProject\\src\\main\\resources\\static\\img\\";
-                File dest = new File(uploadDir + file_name);
-                System.out.println("파일 경로: " + dest.getAbsolutePath());
-                if (postService.registerPost(user.getUsername(), text, "/img/" + file_name)) {
-                    // 파일 저장
-                    file.transferTo(dest);
+
+                if (postService.registerPost(user.getUsername(), text, file_name)) {
+                    for(int i = 0; i < file.length; i++) {
+                        File dest = new File(uploadDir + file_name[i]);
+                        file[i].transferTo(dest);
+                    }
 
                     response.put("success", true);
                 }

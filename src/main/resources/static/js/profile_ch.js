@@ -37,12 +37,35 @@ $(".right-submit").click(function () {
 
     if (allowedExtensions.indexOf(fileExtension) > -1) {
       console.log("선택한 파일 경로:", selectedFile.name);
-      $(this).closest(".change-info").submit();
+
+      var formData = new FormData();
+      formData.append('file', selectedFile);
+      formData.append('introduce', $(this).closest(".change-info").find(".right-intro").val());
+      formData.append('gender', $(this).closest(".change-info").find('input[name="gender"]:checked').val());
+
+      $.ajax({
+        url: '/view/profile_ch2',
+        type: 'POST',
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function(response) {
+          if (response.success){
+            alert(response.message);
+            location.href = "/view/home";
+          } else {
+            alert(response.message);
+          }
+        },
+        error: function(error) {
+          console.log("에러 발생");
+        }
+      });
     } else {
+      alert("허용되지 않는 파일 형식입니다.");
     }
   }
 });
-
 
 
 const radioButtons = document.querySelectorAll('input[type="radio"]');

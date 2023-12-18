@@ -1,5 +1,10 @@
 package com.example.snsProject.repository;
 
+import com.example.snsProject.model.DAO.EmoticonDAO;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -8,10 +13,13 @@ import java.util.List;
 import java.util.Vector;
 
 @Service
+@RequiredArgsConstructor
 public class Emoticon {
 
     private static volatile Emoticon repository;
+    private final EmoticonDAO emoticonDAO;
 
+    @Getter
     private final String[] emoticons = new String[] {
     "\uD83D\uDE02", "\uD83D\uDE05", "\uD83E\uDD23", "\uD83D\uDE25", "\uD83D\uDE06", "\uD83D\uDE0D", "\uD83D\uDE31",
             "\uD83D\uDE34", "\uD83D\uDE35", "\uD83D\uDE37", "\uD83E\uDD25", "\uD83D\uDE1D", "\uD83E\uDD2B", "\uD83E\uDD2D",
@@ -28,7 +36,16 @@ public class Emoticon {
         "\uD83D\uDE95","\uD83D\uDE9A","\uD83D\uDE9B"
     };
 
-    public String[] getEmoticons() {
-        return emoticons;
+    public void emoticonAdd(String emoticon) {
+        emoticonDAO.emoticonAdd(emoticon);
+    }
+
+    public static void main(String[] args) {
+        ApplicationContext context = new AnnotationConfigApplicationContext(Emoticon.class);
+
+        Emoticon emoticon = context.getBean(Emoticon.class);
+        for (int i = 3; i < Emoticon.repository.getEmoticons().length; i++) {
+            emoticon.emoticonAdd(Emoticon.repository.getEmoticons()[i]);
+        }
     }
 }

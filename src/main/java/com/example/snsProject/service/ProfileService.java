@@ -17,6 +17,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class ProfileService {
     private final ProfileDAO profileDAO;
+    private final FollowService followService;
 
     public long CountPosts(String id){
 
@@ -120,12 +121,84 @@ public class ProfileService {
         }
         return result;
     }
-    List<HashMap<?,?>> getImagesUrl(){                                      // post_image post_id
-        List<HashMap<?,?>> result= null;
+    public List<Map<String,Object>> getAllfollowers(String followers_user,String member_id){
+        List<Map<String, Object>> result = null;
+
         try {
-            result = profileDAO.getImagesUrl();
-        } catch (Exception e){
+            result = profileDAO.getAllFollowers(Long.parseLong(member_id));
+
+            for (int i = 0; i < result.size(); i++) {
+                if (result.get(i).get("url") == null) {
+                    result.get(i).put("url", "");
+                }
+                if (followService.followRelation(result.get(i).get("id").toString(), member_id)) { // 나를 팔로우한 상대를 내가 팔로우 할 수 있을 때
+                    result.get(i).put("follow_check", "true");
+                } else {
+                    result.get(i).put("follow_check", "");
+                }
+            }
+
+        }catch (Exception e){
             e.printStackTrace();
+            System.out.println("getAllfollows 에러!!!!");
+        }
+        return result;
+    }
+
+    public List<Map<String,Object>> getMyFollowers(String search_input,String member_id){
+        List<Map<String, Object>> result = null;
+        try {
+            result = profileDAO.getMyFollowers(search_input,Long.parseLong(member_id));
+            for (int i = 0; i < result.size(); i++) {
+                if (result.get(i).get("url") == null) {
+                    result.get(i).put("url", "");
+                }
+                if (followService.followRelation(result.get(i).get("id").toString(), member_id)) { // 나를 팔로우한 상대를 내가 팔로우 할 수 있을 때
+                    result.get(i).put("follow_check", "true");
+                } else {
+                    result.get(i).put("follow_check", "");
+                }
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.println("getmyfollowers 에러!!!!");
+        }
+        return result;
+    }
+
+    public List<Map<String,Object>> getAllfollows(String followers_user,String member_id){
+        List<Map<String, Object>> result = null;
+        try {
+            result = profileDAO.getAllFollows(Long.parseLong(member_id)); // 나를 팔로우한 사람
+
+            for(int i = 0; i < result.size(); i++) {
+                if (result.get(i).get("url") == null) {
+                    result.get(i).put("url", "");
+                }
+                result.get(i).put("follow_check","false");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.println("getAllfollows 에러!!!!");
+        }
+        return result;
+    }
+
+    public List<Map<String,Object>> getMyFollows(String search_input,String member_id){
+        List<Map<String, Object>> result = null;
+        try {
+            result = profileDAO.getMyFollows(search_input,Long.parseLong(member_id));
+            for (int i = 0; i < result.size(); i++) {
+                if (result.get(i).get("url") == null) {
+                    result.get(i).put("url", "");
+                }
+                result.get(i).put("follow_check","false");
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.println("getmyfollowers 에러!!!!");
         }
         return result;
     }

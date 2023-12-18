@@ -24,12 +24,14 @@ public class PostService {
         return postDAO.getImagesUrl();
     }
 
-    public boolean registerPost(String userId, String postText, String postImageUrl) {
+    public boolean registerPost(String userId, String postText, String[] postImageUrl) {
         boolean result = false;
         result =  postDAO.registerPost(userId, postText);
         if (result) {
             long id = postDAO.getRegisterPost(userId);
-            result = postDAO.registerPostImage(id, postImageUrl);
+            for (String imageUrl : postImageUrl) {
+                result = postDAO.registerPostImage(id, "/img/" + imageUrl);
+            }
         }
         return result;
     }

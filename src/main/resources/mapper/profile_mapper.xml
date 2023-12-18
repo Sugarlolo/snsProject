@@ -66,6 +66,7 @@
             select * from post_like where post_id = #{postId};
         ]]>
     </select>
+
     <select id="getPostTags" resultType="com.example.snsProject.model.DTO.PostTagDTO">
         <![CDATA[
             select * from post_tag where post_id = #{postImageId};
@@ -87,5 +88,42 @@
             delete from post_like where member_id = #{userId} and post_id = #{postId};
         ]]>
     </delete>
+
+
+    <select id="getAllFollowers" parameterType="long" resultType="map">
+        <![CDATA[
+            SELECT m.id, m.name,m.email,m.phone,m.url, m.user_name
+            FROM follow f
+            LEFT OUTER JOIN member m ON m.id = f.member_id
+            WHERE f.follow_member_id = #{member_id};
+        ]]>
+    </select>
+
+    <select id="getMyFollowers" resultType="map">
+        <![CDATA[
+            SELECT m.id, m.name,m.email,m.phone,m.url, m.user_name
+            FROM follow f
+            LEFT OUTER JOIN member m ON m.id = f.member_id
+            WHERE f.follow_member_id = #{member_id} and ( m.user_name like CONCAT( '%' , #{user_id} , '%') OR m.name like CONCAT( '%' , #{user_id} , '%') );
+        ]]>
+    </select>
+
+    <select id="getAllFollows" parameterType="long" resultType="map">
+        <![CDATA[
+            SELECT m.id, m.name,m.email,m.phone,m.url, m.user_name
+            FROM follow f
+            LEFT OUTER JOIN member m ON m.id = f.follow_member_id
+            WHERE f.member_id = #{member_id};
+        ]]>
+    </select>
+
+    <select id="getMyFollows" resultType="map">
+        <![CDATA[
+            SELECT m.id, m.name,m.email,m.phone,m.url, m.user_name
+            FROM follow f
+            LEFT OUTER JOIN member m ON m.id = f.follow_member_id
+            WHERE f.member_id = #{member_id} and ( m.user_name like CONCAT( '%' , #{user_id} , '%') OR m.name like CONCAT( '%' , #{user_id} , '%') );
+        ]]>
+    </select>
 
 </mapper>

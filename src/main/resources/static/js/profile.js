@@ -12,14 +12,14 @@ function toggleContent(category) {
 
 $('#postLink').click(function() {
     toggleContent('post');
-    $('#postLink').attr('aria-selected', 'true');
-    $('#savedLink').attr('aria-selected', 'false');
+    $('.post_box').css('border-top', '2px solid black');
+    $('.saved_box').css('border', 'none');
 });
 
 $('#savedLink').click(function() {
     toggleContent('saved');
-    $('#postLink').attr('aria-selected', 'false');
-    $('#savedLink').attr('aria-selected', 'true');
+    $('.saved_box').css('border-top', '2px solid black');
+    $('.post_box').css('border', 'none');
 });
 
 
