@@ -71,4 +71,5 @@ public class ViewController {
         model.addAttribute("post", posts);
         return "explore/loadContent2";
     }
+
 }

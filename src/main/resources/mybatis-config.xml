@@ -25,6 +25,7 @@
         <mapper resource="mapper/message_mapper.xml"/>
         <mapper resource="mapper/profile_mapper.xml"/>
         <mapper resource="mapper/image_mapper.xml"/>
+        <mapper resource="mapper/shop_mapper.xml"/>
 
     </mappers>
 </configuration>
