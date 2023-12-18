@@ -1,18 +1,11 @@
 package com.example.snsProject.model.DTO;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
 public class ImageDTO {
-    private int id;
-    private int postId;
-    private String img_url;
-    private String img_uuid;
-
+    int id;
+    int postId;
+    String img_url;
+    String img_uuid;
 }

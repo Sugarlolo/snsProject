@@ -61,8 +61,12 @@ public class ExploreController {
         model.addAttribute("emoticon", emoticon.getEmoticons());
         memberService.findUser(user.getUsername()).getUrl();
         model.addAttribute("posts", posts);
-        return "response/explore_th";
+        System.out.println("이미지 갯수: " + posts.get(0).getImages().size());
+        System.out.println("좋아요 갯수: " + posts.get(0).getLikes().size());
+        System.out.println("댓글 갯수: " + posts.get(0).getCommentSize());
+        return "explore/explore_th";
     }
+
 
 //    @RequestMapping(value = "/load", method = RequestMethod.POST)
 //    public String responseLoadedContent(Model model) {

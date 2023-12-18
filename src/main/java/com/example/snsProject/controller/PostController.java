@@ -1,5 +1,7 @@
 package com.example.snsProject.controller;
 
+import com.example.snsProject.model.DAO.ImageDAO;
+import com.example.snsProject.service.ImageService;
 import com.example.snsProject.service.PageService;
 import com.example.snsProject.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -66,53 +68,7 @@ public class PostController {
         return "explore";
     }*/
 
-    @GetMapping("/{postId}")
-    public String responsePostView(@PathVariable(value="postId") int postId, Model model) {
-        return "/post/postView";
-    }
 
-    @RequestMapping("")
-    public String responseViewExplore() {
-        return "explore";
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ResponseEntity<?> responseImgUrl() {
-        List<HashMap<?,?>> urlMap;
-        urlMap = postService.getImagesUrl();
-        return ResponseEntity.ok(urlMap);
-    }
-
-    @RequestMapping(value = "/load", method = RequestMethod.GET)
-    public String responseLoadedContent(Model model) {
-        List<HashMap<?, ?>> urlMap;
-        urlMap = postService.getImagesUrl();
-        model.addAttribute("result", urlMap);
-        return "/explore/LoadContent";
-    }
-
-    @GetMapping("/deletePost")
-    public ResponseEntity<Map<String, Object>> deletePost(@RequestParam String postId, @AuthenticationPrincipal UserDetails user) {
-        Map<String, Object> response = new HashMap<>();
-        try {
-            if (postService.getPost(postId, user.getUsername())) {
-                if (postService.deletePost(user.getUsername(), postId)) {
-                    response.put("success", true);
-                    response.put("message", "삭제 완료하였습니다.");
-                } else {
-                    response.put("success", false);
-                    response.put("message", "삭제를 실패하였습니다.");
-                }
-            } else {
-                response.put("success", false);
-                response.put("message", "삭제 권한이 없습니다.");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return ResponseEntity.ok(response);
-    }
 
 //    @GetMapping("/{postId}")
 //    public String responsePostView(@PathVariable(value="postId") int postId, Model model) {

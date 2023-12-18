@@ -11,6 +11,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -65,5 +66,15 @@ public class ViewController {
         return "response/registPost";
     }
 
+
+    @PostMapping("/carousel")
+    public String responseCarousel(@AuthenticationPrincipal UserDetails user, Model model){
+        posts = pageService.getPosts(user.getUsername(),0,8);
+        model.addAttribute("followRecommends",followService.recommendFollow(user.getUsername()));
+        model.addAttribute("loginUser", memberService.findUser(user.getUsername()));
+        memberService.findUser(user.getUsername()).getUrl();
+        model.addAttribute("post", posts);
+        return "explore/loadContent2";
+    }
 
 }

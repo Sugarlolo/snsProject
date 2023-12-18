@@ -1,0 +1,8 @@
+<div class="post">
+    <div>
+        <span th:text="${date.DATE}"></span>
+        <th:block th:each="rs : ${result}" >
+            <img th:src="${rs.url}" alt="">
+        </th:block>
+    </div>
+</div>
